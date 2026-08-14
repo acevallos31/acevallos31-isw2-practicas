@@ -4,7 +4,7 @@
 // Principio SOLID: SRP (Responsabilidad Única)
 // ============================================================
 
-import { validarCamposObligatorios, validarHorario, validarDiasAtencion } from './validacion.js';
+import { validarCamposObligatorios, validarHorario, validarDiasAtencion, normalizarDiasAtencion } from './validacion.js';
 
 /** Campos obligatorios para crear un médico. */
 const CAMPOS_OBLIGATORIOS = ['nombre', 'especialidad', 'colegiatura', 'horarioInicio', 'horarioFin'];
@@ -37,7 +37,12 @@ export function crearMedico(datos) {
  * @throws {Error} Si algún día no es válido.
  */
 export function asignarTurnos(medico, dias) {
-  validarDiasAtencion(dias);
+  if (!medico || !medico.id) {
+    throw new Error('El médico no es válido.');
+  }
 
-  return { ...medico, diasAtencion: [...dias] };
+  validarDiasAtencion(dias);
+  const diasSinDuplicados = normalizarDiasAtencion(dias);
+
+  return { ...medico, diasAtencion: diasSinDuplicados };
 }

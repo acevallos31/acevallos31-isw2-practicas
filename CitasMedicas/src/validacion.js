@@ -188,7 +188,16 @@ export function validarDiasAtencion(dias) {
   }
   for (const dia of dias) {
     if (!DIAS_VALIDOS.includes(dia)) {
-      throw new Error('Día de atención no válido.');
+      throw new Error(`Día de atención no válido: "${dia}".`);
     }
   }
+}
+
+/**
+ * Normaliza una lista de días eliminando duplicados.
+ * @param {string[]} dias - Lista de días.
+ * @returns {string[]} Lista de días sin duplicados.
+ */
+export function normalizarDiasAtencion(dias) {
+  return [...new Set(dias)];
 }

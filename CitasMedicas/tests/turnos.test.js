@@ -29,6 +29,6 @@ describe('asignarTurnos', () => {
     const asignar = () => asignarTurnos(medico, dias);
 
     // ASSERT: Verificamos que lanza un error por día inválido
-    expect(asignar).toThrow('Día de atención no válido.');
+    expect(asignar).toThrow('Día de atención no válido');
   });
 });
