@@ -118,8 +118,9 @@ Cada prueba unitaria sigue el patrón AAA:
 | RF-07 | `crearMedico` | ✅ Completado |
 | RF-10 | `crearCita` | ✅ Completado |
 | RF-13 | `cambiarEstadoCita` | ✅ Completado |
+| Turnos | `asignarTurnos` | ✅ Completado |
 
-**Pruebas unitarias:** 11 passed, 5 suites
+**Pruebas unitarias:** 13 passed, 6 suites
 
 ### Archivos de prueba (patrón AAA)
 
@@ -130,3 +131,4 @@ Cada prueba unitaria sigue el patrón AAA:
 | `tests/medico.test.js` | `crearMedico` |
 | `tests/cita.test.js` | `crearCita` |
 | `tests/cambiarEstado.test.js` | `cambiarEstadoCita` |
+| `tests/turnos.test.js` | `asignarTurnos` |
