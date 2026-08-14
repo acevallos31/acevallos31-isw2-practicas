@@ -112,3 +112,35 @@ export function obtenerDisponibilidad(medico, citas, duracionMin) {
 
   return slots;
 }
+
+/**
+ * Edita los datos de un médico existente.
+ * @param {Object} medico - Médico a editar.
+ * @param {Object} nuevosDatos - Nuevos datos del médico.
+ * @returns {Object} Médico editado.
+ * @throws {Error} Si el horario es inválido.
+ */
+export function editarMedico(medico, nuevosDatos) {
+  validarMedico(medico);
+
+  const datosEditados = { ...medico, ...nuevosDatos };
+  validarHorario(datosEditados.horarioInicio, datosEditados.horarioFin);
+
+  return datosEditados;
+}
+
+/**
+ * Elimina un médico de la lista.
+ * @param {Array<Object>} medicos - Lista de médicos.
+ * @param {string} id - Identificador del médico a eliminar.
+ * @returns {Array<Object>} Lista de médicos sin el eliminado.
+ * @throws {Error} Si el médico no existe.
+ */
+export function eliminarMedico(medicos, id) {
+  const existe = medicos.some((medico) => medico.id === id);
+  if (!existe) {
+    throw new Error('El médico no existe.');
+  }
+
+  return medicos.filter((medico) => medico.id !== id);
+}
