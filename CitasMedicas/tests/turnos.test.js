@@ -5,7 +5,7 @@
 // Patrón AAA: Arrange - Act - Assert
 // ============================================================
 
-import { asignarTurnos, bloquearHorario } from '../src/medico.js';
+import { asignarTurnos, bloquearHorario, obtenerDisponibilidad } from '../src/medico.js';
 
 describe('asignarTurnos', () => {
   test('debe asignar días de atención a un médico', () => {
@@ -68,5 +68,58 @@ describe('bloquearHorario', () => {
 
     // ASSERT: Verificamos que lanza un error
     expect(ejecutar).toThrow('El bloqueo debe estar dentro del horario de atención del médico.');
+  });
+});
+
+// ============================================================
+// PRUEBA UNITARIA — TDD (RED)
+// Funcionalidad: Agenda de disponibilidad del médico
+// Función: obtenerDisponibilidad
+// Patrón AAA: Arrange - Act - Assert
+// ============================================================
+
+describe('obtenerDisponibilidad', () => {
+  test('debe generar slots de horarios disponibles del médico', () => {
+    // ARRANGE: Preparamos un médico con horario y sin citas ni bloqueos
+    const medico = { id: 'med-1', horarioInicio: '08:00', horarioFin: '10:00' };
+    const citas = [];
+    const duracionMin = 60;
+
+    // ACT: Ejecutamos la función a probar
+    const slots = obtenerDisponibilidad(medico, citas, duracionMin);
+
+    // ASSERT: Verificamos que se generan los slots esperados
+    expect(slots).toEqual(['08:00', '09:00']);
+  });
+
+  test('debe excluir los horarios ya ocupados por citas', () => {
+    // ARRANGE: Preparamos un médico con una cita ocupada
+    const medico = { id: 'med-1', horarioInicio: '08:00', horarioFin: '10:00' };
+    const citas = [{ idMedico: 'med-1', hora: '09:00' }];
+    const duracionMin = 60;
+
+    // ACT: Ejecutamos la función a probar
+    const slots = obtenerDisponibilidad(medico, citas, duracionMin);
+
+    // ASSERT: Verificamos que el slot ocupado se excluye
+    expect(slots).toEqual(['08:00']);
+  });
+
+  test('debe excluir los horarios bloqueados del médico', () => {
+    // ARRANGE: Preparamos un médico con un bloqueo
+    const medico = {
+      id: 'med-1',
+      horarioInicio: '08:00',
+      horarioFin: '10:00',
+      bloqueos: [{ fecha: '2026-08-20', horaInicio: '09:00', horaFin: '10:00' }]
+    };
+    const citas = [];
+    const duracionMin = 60;
+
+    // ACT: Ejecutamos la función a probar
+    const slots = obtenerDisponibilidad(medico, citas, duracionMin);
+
+    // ASSERT: Verificamos que el slot bloqueado se excluye
+    expect(slots).toEqual(['08:00']);
   });
 });
