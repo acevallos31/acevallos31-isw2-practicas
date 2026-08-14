@@ -69,3 +69,46 @@ export function validarHorario(horarioInicio, horarioFin) {
     throw new Error('La hora de inicio debe ser anterior a la hora de fin.');
   }
 }
+
+/**
+ * Valida que una fecha no sea anterior a hoy.
+ * @param {string} fecha - Fecha en formato YYYY-MM-DD.
+ * @throws {Error} Si la fecha es anterior a hoy.
+ */
+export function validarFechaNoPasada(fecha) {
+  const hoy = new Date();
+  hoy.setHours(0, 0, 0, 0);
+  const fechaCita = new Date(`${fecha}T00:00:00`);
+
+  if (fechaCita < hoy) {
+    throw new Error('La fecha de la cita no puede ser anterior a hoy.');
+  }
+}
+
+/**
+ * Valida que no exista conflicto de horario para un médico o paciente.
+ * @param {Object} datos - Datos de la cita (idPaciente, idMedico, fecha, hora).
+ * @param {Array<Object>} citasExistentes - Lista de citas existentes.
+ * @throws {Error} Si hay conflicto de horario.
+ */
+export function validarConflictoHorario(datos, citasExistentes) {
+  const conflictoMedico = citasExistentes.some(
+    (cita) =>
+      cita.idMedico === datos.idMedico &&
+      cita.fecha === datos.fecha &&
+      cita.hora === datos.hora
+  );
+  if (conflictoMedico) {
+    throw new Error('El médico ya tiene una cita en esa fecha y hora.');
+  }
+
+  const conflictoPaciente = citasExistentes.some(
+    (cita) =>
+      cita.idPaciente === datos.idPaciente &&
+      cita.fecha === datos.fecha &&
+      cita.hora === datos.hora
+  );
+  if (conflictoPaciente) {
+    throw new Error('El paciente ya tiene una cita en esa fecha y hora.');
+  }
+}
