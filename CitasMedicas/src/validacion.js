@@ -17,3 +17,13 @@ export function validarCamposObligatorios(datos, camposObligatorios) {
     }
   }
 }
+
+/**
+ * Valida que un DNI no esté duplicado en la lista de pacientes.
+ * @param {string} dni - DNI a validar.
+ * @param {Array<Object>} pacientes - Lista de pacientes existentes.
+ * @returns {boolean} true si el DNI es único, false si está duplicado.
+ */
+export function validarDniUnico(dni, pacientes) {
+  return !pacientes.some((paciente) => paciente.dni === dni);
+}
