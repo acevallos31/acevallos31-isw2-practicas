@@ -230,6 +230,20 @@ export function validarMedico(medico) {
 }
 
 /**
+ * Valida que un elemento exista en una lista por su id.
+ * @param {Array<Object>} lista - Lista de elementos.
+ * @param {string} id - Identificador a buscar.
+ * @param {string} nombreEntidad - Nombre de la entidad para el mensaje de error.
+ * @throws {Error} Si el elemento no existe.
+ */
+export function validarExistencia(lista, id, nombreEntidad) {
+  const existe = lista.some((elemento) => elemento.id === id);
+  if (!existe) {
+    throw new Error(`El ${nombreEntidad} no existe.`);
+  }
+}
+
+/**
  * Valida que un bloqueo de horario esté dentro del horario de atención del médico.
  * @param {Object} bloqueo - Bloqueo a validar (horaInicio, horaFin).
  * @param {string} horarioInicio - Hora de inicio del médico (HH:MM).

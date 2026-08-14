@@ -4,7 +4,7 @@
 // Principio SOLID: SRP (Responsabilidad Única)
 // ============================================================
 
-import { validarCamposObligatorios, validarHorario, validarDiasAtencion, normalizarDiasAtencion, validarBloqueoEnHorario, validarMedico } from './validacion.js';
+import { validarCamposObligatorios, validarHorario, validarDiasAtencion, normalizarDiasAtencion, validarBloqueoEnHorario, validarMedico, validarExistencia } from './validacion.js';
 
 /** Campos obligatorios para crear un médico. */
 const CAMPOS_OBLIGATORIOS = ['nombre', 'especialidad', 'colegiatura', 'horarioInicio', 'horarioFin'];
@@ -137,10 +137,7 @@ export function editarMedico(medico, nuevosDatos) {
  * @throws {Error} Si el médico no existe.
  */
 export function eliminarMedico(medicos, id) {
-  const existe = medicos.some((medico) => medico.id === id);
-  if (!existe) {
-    throw new Error('El médico no existe.');
-  }
+  validarExistencia(medicos, id, 'médico');
 
   return medicos.filter((medico) => medico.id !== id);
 }
