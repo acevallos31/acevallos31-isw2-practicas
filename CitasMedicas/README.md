@@ -111,6 +111,22 @@ Cada prueba unitaria sigue el patrón AAA:
 
 ## 9. Estado del Proyecto
 
-| Fase TDD | Funcionalidad | Estado |
-|----------|---------------|--------|
-| GREEN | `crearPaciente` | ✅ Completado |
+| Requerimiento | Funcionalidad | Estado |
+|---------------|---------------|--------|
+| RF-01 | `crearPaciente` | ✅ Completado |
+| RF-06 | `validarDniUnico` | ✅ Completado |
+| RF-07 | `crearMedico` | ✅ Completado |
+| RF-10 | `crearCita` | ✅ Completado |
+| RF-13 | `cambiarEstadoCita` | ✅ Completado |
+
+**Pruebas unitarias:** 11 passed, 5 suites
+
+### Archivos de prueba (patrón AAA)
+
+| Archivo | Funcionalidad cubierta |
+|---------|------------------------|
+| `tests/paciente.test.js` | `crearPaciente` |
+| `tests/dniUnico.test.js` | `validarDniUnico` |
+| `tests/medico.test.js` | `crearMedico` |
+| `tests/cita.test.js` | `crearCita` |
+| `tests/cambiarEstado.test.js` | `cambiarEstadoCita` |
