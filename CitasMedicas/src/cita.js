@@ -101,11 +101,9 @@ export function cancelarCita(cita, usuario) {
  * @returns {Array<Object>} Citas que cumplen los filtros.
  */
 export function listarCitas(citas, filtros = {}) {
-  return citas.filter((cita) => {
-    if (filtros.idPaciente && cita.idPaciente !== filtros.idPaciente) return false;
-    if (filtros.idMedico && cita.idMedico !== filtros.idMedico) return false;
-    if (filtros.fecha && cita.fecha !== filtros.fecha) return false;
-    if (filtros.estado && cita.estado !== filtros.estado) return false;
-    return true;
-  });
+  const filtrosActivos = Object.entries(filtros).filter(([, valor]) => valor);
+
+  return citas.filter((cita) =>
+    filtrosActivos.every(([campo, valor]) => cita[campo] === valor)
+  );
 }
