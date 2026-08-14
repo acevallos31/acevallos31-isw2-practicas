@@ -5,7 +5,7 @@
 // Patrón AAA: Arrange - Act - Assert
 // ============================================================
 
-import { crearPaciente } from '../src/paciente.js';
+import { crearPaciente, buscarPacientes } from '../src/paciente.js';
 
 describe('crearPaciente', () => {
   test('debe crear un paciente válido con todos sus datos', () => {
@@ -33,5 +33,57 @@ describe('crearPaciente', () => {
     expect(paciente.telefono).toBe('987654321');
     expect(paciente.correo).toBe('juan.perez@mail.com');
     expect(paciente.direccion).toBe('Av. Los Olivos 123');
+  });
+});
+
+// ============================================================
+// PRUEBA UNITARIA — TDD (RED)
+// Requerimiento: RF-03 — Buscar pacientes por nombre o DNI
+// Función: buscarPacientes
+// Patrón AAA: Arrange - Act - Assert
+// ============================================================
+
+describe('buscarPacientes', () => {
+  test('debe buscar pacientes por nombre', () => {
+    // ARRANGE: Preparamos una lista de pacientes
+    const pacientes = [
+      { id: '1', nombre: 'Juan', apellidos: 'Pérez', dni: '12345678' },
+      { id: '2', nombre: 'María', apellidos: 'Gómez', dni: '87654321' }
+    ];
+
+    // ACT: Ejecutamos la función a probar
+    const resultado = buscarPacientes(pacientes, 'Juan');
+
+    // ASSERT: Verificamos que encuentra al paciente por nombre
+    expect(resultado.length).toBe(1);
+    expect(resultado[0].id).toBe('1');
+  });
+
+  test('debe buscar pacientes por DNI', () => {
+    // ARRANGE: Preparamos una lista de pacientes
+    const pacientes = [
+      { id: '1', nombre: 'Juan', apellidos: 'Pérez', dni: '12345678' },
+      { id: '2', nombre: 'María', apellidos: 'Gómez', dni: '87654321' }
+    ];
+
+    // ACT: Ejecutamos la función a probar
+    const resultado = buscarPacientes(pacientes, '87654321');
+
+    // ASSERT: Verificamos que encuentra al paciente por DNI
+    expect(resultado.length).toBe(1);
+    expect(resultado[0].id).toBe('2');
+  });
+
+  test('debe devolver lista vacía si no hay coincidencias', () => {
+    // ARRANGE: Preparamos una lista de pacientes
+    const pacientes = [
+      { id: '1', nombre: 'Juan', apellidos: 'Pérez', dni: '12345678' }
+    ];
+
+    // ACT: Ejecutamos la función a probar
+    const resultado = buscarPacientes(pacientes, 'Inexistente');
+
+    // ASSERT: Verificamos que devuelve lista vacía
+    expect(resultado.length).toBe(0);
   });
 });
