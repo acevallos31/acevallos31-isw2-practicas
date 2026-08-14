@@ -58,3 +58,43 @@ export function cambiarEstadoCita(cita, nuevoEstado) {
 
   return { ...cita, estado: nuevoEstado };
 }
+
+/**
+ * Edita los datos de una cita existente.
+ * @param {Object} cita - Cita a editar.
+ * @param {Object} nuevosDatos - Nuevos datos de la cita (fecha, hora, motivo).
+ * @param {Array<Object>} citasExistentes - Lista de citas existentes.
+ * @returns {Object} Cita editada.
+ * @throws {Error} Si hay conflicto de horario o datos inválidos.
+ */
+export function editarCita(cita, nuevosDatos, citasExistentes) {
+  const datosEditados = { ...cita, ...nuevosDatos };
+
+  validarFormatoFecha(datosEditados.fecha);
+  validarFormatoHora(datosEditados.hora);
+  validarFechaNoPasada(datosEditados.fecha);
+
+  const otrasCitas = citasExistentes.filter((c) => c.id !== cita.id);
+  validarConflictoHorario(datosEditados, otrasCitas);
+
+  return datosEditados;
+}
+
+/**
+ * Cancela una cita y registra la acción en auditoría.
+ * @param {Object} cita - Cita a cancelar.
+ * @param {string} usuario - Usuario que realiza la cancelación.
+ * @returns {Object} Cita cancelada con registro de auditoría.
+ */
+export function cancelarCita(cita, usuario) {
+  const citaCancelada = { ...cita, estado: 'Cancelada' };
+
+  const auditoria = {
+    accion: 'CANCELAR_CITA',
+    usuario: usuario || 'sistema',
+    fecha: new Date().toISOString(),
+    citaId: cita.id
+  };
+
+  return { ...citaCancelada, auditoria };
+}
