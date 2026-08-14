@@ -4,7 +4,7 @@
 // Principio SOLID: SRP (Responsabilidad Única)
 // ============================================================
 
-import { validarCamposObligatorios, validarHorario, validarDiasAtencion, normalizarDiasAtencion } from './validacion.js';
+import { validarCamposObligatorios, validarHorario, validarDiasAtencion, normalizarDiasAtencion, validarBloqueoEnHorario } from './validacion.js';
 
 /** Campos obligatorios para crear un médico. */
 const CAMPOS_OBLIGATORIOS = ['nombre', 'especialidad', 'colegiatura', 'horarioInicio', 'horarioFin'];
@@ -45,4 +45,24 @@ export function asignarTurnos(medico, dias) {
   const diasSinDuplicados = normalizarDiasAtencion(dias);
 
   return { ...medico, diasAtencion: diasSinDuplicados };
+}
+
+/**
+ * Agrega un bloqueo de horario a un médico.
+ * @param {Object} medico - Médico al que agregar el bloqueo.
+ * @param {Object} bloqueo - Datos del bloqueo (fecha, horaInicio, horaFin, motivo).
+ * @returns {Object} Médico con el bloqueo agregado.
+ * @throws {Error} Si el bloqueo está fuera del horario de atención.
+ */
+export function bloquearHorario(medico, bloqueo) {
+  if (!medico || !medico.id) {
+    throw new Error('El médico no es válido.');
+  }
+
+  validarBloqueoEnHorario(bloqueo, medico.horarioInicio, medico.horarioFin);
+
+  const bloqueos = medico.bloqueos ? [...medico.bloqueos] : [];
+  bloqueos.push({ ...bloqueo });
+
+  return { ...medico, bloqueos };
 }

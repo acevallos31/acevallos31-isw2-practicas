@@ -201,3 +201,16 @@ export function validarDiasAtencion(dias) {
 export function normalizarDiasAtencion(dias) {
   return [...new Set(dias)];
 }
+
+/**
+ * Valida que un bloqueo de horario esté dentro del horario de atención del médico.
+ * @param {Object} bloqueo - Bloqueo a validar (horaInicio, horaFin).
+ * @param {string} horarioInicio - Hora de inicio del médico (HH:MM).
+ * @param {string} horarioFin - Hora de fin del médico (HH:MM).
+ * @throws {Error} Si el bloqueo está fuera del horario de atención.
+ */
+export function validarBloqueoEnHorario(bloqueo, horarioInicio, horarioFin) {
+  if (bloqueo.horaInicio < horarioInicio || bloqueo.horaFin > horarioFin) {
+    throw new Error('El bloqueo debe estar dentro del horario de atención del médico.');
+  }
+}
