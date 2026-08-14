@@ -61,3 +61,36 @@ export function bloquearHorario(medico, bloqueo) {
 
   return { ...medico, bloqueos };
 }
+
+/**
+ * Genera los slots de horarios disponibles de un médico.
+ * @param {Object} medico - Médico del que obtener disponibilidad.
+ * @param {Array<Object>} citas - Lista de citas existentes.
+ * @param {number} duracionMin - Duración de cada slot en minutos.
+ * @returns {string[]} Lista de horas disponibles (HH:MM).
+ */
+export function obtenerDisponibilidad(medico, citas, duracionMin) {
+  validarMedico(medico);
+
+  const slots = [];
+  const [horaInicio, minInicio] = medico.horarioInicio.split(':').map(Number);
+  const [horaFin, minFin] = medico.horarioFin.split(':').map(Number);
+
+  const inicioMin = horaInicio * 60 + minInicio;
+  const finMin = horaFin * 60 + minFin;
+
+  const horasOcupadas = citas
+    .filter((cita) => cita.idMedico === medico.id)
+    .map((cita) => cita.hora);
+
+  const horasBloqueadas = (medico.bloqueos || []).map((bloqueo) => bloqueo.horaInicio);
+
+  for (let t = inicioMin; t < finMin; t += duracionMin) {
+    const hora = `${String(Math.floor(t / 60)).padStart(2, '0')}:${String(t % 60).padStart(2, '0')}`;
+    if (!horasOcupadas.includes(hora) && !horasBloqueadas.includes(hora)) {
+      slots.push(hora);
+    }
+  }
+
+  return slots;
+}
