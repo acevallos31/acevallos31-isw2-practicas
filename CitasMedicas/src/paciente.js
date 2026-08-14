@@ -1,14 +1,23 @@
 // ============================================================
 // Módulo: Paciente
-// Fase TDD: GREEN — Implementación mínima para pasar la prueba
+// Fase TDD: REFACTOR — Mejora de código sin cambiar comportamiento
+// Principio SOLID: SRP (Responsabilidad Única)
 // ============================================================
+
+import { validarCamposObligatorios } from './validacion.js';
+
+/** Campos obligatorios para crear un paciente. */
+const CAMPOS_OBLIGATORIOS = ['nombre', 'apellidos', 'dni', 'fechaNacimiento', 'telefono'];
 
 /**
  * Crea un nuevo paciente con un id único.
  * @param {Object} datos - Datos del paciente.
  * @returns {Object} Paciente creado.
+ * @throws {Error} Si faltan campos obligatorios.
  */
 export function crearPaciente(datos) {
+  validarCamposObligatorios(datos, CAMPOS_OBLIGATORIOS);
+
   return {
     id: crypto.randomUUID(),
     nombre: datos.nombre,
