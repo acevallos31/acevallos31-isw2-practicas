@@ -29,3 +29,20 @@ export function crearPaciente(datos) {
     direccion: datos.direccion
   };
 }
+
+/**
+ * Busca pacientes por nombre o DNI.
+ * @param {Array<Object>} pacientes - Lista de pacientes.
+ * @param {string} criterio - Texto a buscar (nombre o DNI).
+ * @returns {Array<Object>} Pacientes que coinciden con el criterio.
+ */
+export function buscarPacientes(pacientes, criterio) {
+  const texto = String(criterio).toLowerCase().trim();
+
+  return pacientes.filter(
+    (paciente) =>
+      paciente.nombre.toLowerCase().includes(texto) ||
+      paciente.apellidos.toLowerCase().includes(texto) ||
+      paciente.dni.toLowerCase().includes(texto)
+  );
+}
