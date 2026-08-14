@@ -93,3 +93,19 @@ export function cancelarCita(cita, usuario) {
 
   return { ...citaCancelada, auditoria };
 }
+
+/**
+ * Lista las citas aplicando filtros opcionales.
+ * @param {Array<Object>} citas - Lista de citas.
+ * @param {Object} filtros - Filtros a aplicar (idPaciente, idMedico, fecha, estado).
+ * @returns {Array<Object>} Citas que cumplen los filtros.
+ */
+export function listarCitas(citas, filtros = {}) {
+  return citas.filter((cita) => {
+    if (filtros.idPaciente && cita.idPaciente !== filtros.idPaciente) return false;
+    if (filtros.idMedico && cita.idMedico !== filtros.idMedico) return false;
+    if (filtros.fecha && cita.fecha !== filtros.fecha) return false;
+    if (filtros.estado && cita.estado !== filtros.estado) return false;
+    return true;
+  });
+}
