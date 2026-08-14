@@ -1,10 +1,10 @@
 // ============================================================
 // Módulo: Médico
-// Fase TDD: GREEN — Implementación mínima para pasar la prueba
+// Fase TDD: REFACTOR — Mejora de código sin cambiar comportamiento
 // Principio SOLID: SRP (Responsabilidad Única)
 // ============================================================
 
-import { validarCamposObligatorios } from './validacion.js';
+import { validarCamposObligatorios, validarHorario } from './validacion.js';
 
 /** Campos obligatorios para crear un médico. */
 const CAMPOS_OBLIGATORIOS = ['nombre', 'especialidad', 'colegiatura', 'horarioInicio', 'horarioFin'];
@@ -13,10 +13,11 @@ const CAMPOS_OBLIGATORIOS = ['nombre', 'especialidad', 'colegiatura', 'horarioIn
  * Crea un nuevo médico con un id único.
  * @param {Object} datos - Datos del médico.
  * @returns {Object} Médico creado.
- * @throws {Error} Si faltan campos obligatorios.
+ * @throws {Error} Si faltan campos obligatorios o el horario es inválido.
  */
 export function crearMedico(datos) {
   validarCamposObligatorios(datos, CAMPOS_OBLIGATORIOS);
+  validarHorario(datos.horarioInicio, datos.horarioFin);
 
   return {
     id: crypto.randomUUID(),

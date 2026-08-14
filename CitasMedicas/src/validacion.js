@@ -45,3 +45,27 @@ export function validarDniUnico(dni, pacientes) {
   const dniNormalizado = normalizarDni(dni);
   return !pacientes.some((paciente) => normalizarDni(paciente.dni) === dniNormalizado);
 }
+
+/**
+ * Valida que una hora tenga formato HH:MM.
+ * @param {string} hora - Hora a validar.
+ * @returns {boolean} true si el formato es válido.
+ */
+function esHoraValida(hora) {
+  return /^([01]\d|2[0-3]):[0-5]\d$/.test(hora);
+}
+
+/**
+ * Valida el horario de atención de un médico.
+ * @param {string} horarioInicio - Hora de inicio (HH:MM).
+ * @param {string} horarioFin - Hora de fin (HH:MM).
+ * @throws {Error} Si el formato es inválido o el inicio es posterior al fin.
+ */
+export function validarHorario(horarioInicio, horarioFin) {
+  if (!esHoraValida(horarioInicio) || !esHoraValida(horarioFin)) {
+    throw new Error('El horario debe tener formato HH:MM.');
+  }
+  if (horarioInicio >= horarioFin) {
+    throw new Error('La hora de inicio debe ser anterior a la hora de fin.');
+  }
+}
