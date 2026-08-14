@@ -147,3 +147,29 @@ export function validarConflictoHorario(datos, citasExistentes) {
     throw new Error('El paciente ya tiene una cita en esa fecha y hora.');
   }
 }
+
+/** Estados válidos para una cita médica. */
+const ESTADOS_CITA = ['Pendiente', 'Confirmada', 'Completada', 'Cancelada'];
+
+/**
+ * Valida que un estado de cita sea válido.
+ * @param {string} estado - Estado a validar.
+ * @throws {Error} Si el estado no es válido.
+ */
+export function validarEstadoCita(estado) {
+  if (!ESTADOS_CITA.includes(estado)) {
+    throw new Error('Estado de cita no válido.');
+  }
+}
+
+/**
+ * Valida que una cita cancelada no pueda volver a Pendiente o Confirmada (RN-05).
+ * @param {string} estadoActual - Estado actual de la cita.
+ * @param {string} nuevoEstado - Nuevo estado deseado.
+ * @throws {Error} Si la transición no está permitida.
+ */
+export function validarTransicionEstado(estadoActual, nuevoEstado) {
+  if (estadoActual === 'Cancelada' && (nuevoEstado === 'Pendiente' || nuevoEstado === 'Confirmada')) {
+    throw new Error('Una cita cancelada no puede volver a Pendiente o Confirmada.');
+  }
+}

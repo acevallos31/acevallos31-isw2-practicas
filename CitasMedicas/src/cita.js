@@ -9,7 +9,9 @@ import {
   validarFechaNoPasada,
   validarFormatoFecha,
   validarFormatoHora,
-  validarConflictoHorario
+  validarConflictoHorario,
+  validarEstadoCita,
+  validarTransicionEstado
 } from './validacion.js';
 
 /** Campos obligatorios para crear una cita. */
@@ -41,4 +43,18 @@ export function crearCita(datos, citasExistentes) {
     motivo: datos.motivo,
     estado: ESTADO_INICIAL
   };
+}
+
+/**
+ * Cambia el estado de una cita validando la transición.
+ * @param {Object} cita - Cita a modificar.
+ * @param {string} nuevoEstado - Nuevo estado de la cita.
+ * @returns {Object} Cita con el estado actualizado.
+ * @throws {Error} Si el estado no es válido o la transición no está permitida.
+ */
+export function cambiarEstadoCita(cita, nuevoEstado) {
+  validarEstadoCita(nuevoEstado);
+  validarTransicionEstado(cita.estado, nuevoEstado);
+
+  return { ...cita, estado: nuevoEstado };
 }
