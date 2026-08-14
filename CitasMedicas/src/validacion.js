@@ -173,3 +173,22 @@ export function validarTransicionEstado(estadoActual, nuevoEstado) {
     throw new Error('Una cita cancelada no puede volver a Pendiente o Confirmada.');
   }
 }
+
+/** Días válidos de atención. */
+const DIAS_VALIDOS = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
+
+/**
+ * Valida que los días de atención sean válidos.
+ * @param {string[]} dias - Lista de días de atención.
+ * @throws {Error} Si algún día no es válido.
+ */
+export function validarDiasAtencion(dias) {
+  if (!Array.isArray(dias) || dias.length === 0) {
+    throw new Error('Debe especificar al menos un día de atención.');
+  }
+  for (const dia of dias) {
+    if (!DIAS_VALIDOS.includes(dia)) {
+      throw new Error('Día de atención no válido.');
+    }
+  }
+}
