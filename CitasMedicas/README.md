@@ -119,8 +119,10 @@ Cada prueba unitaria sigue el patrón AAA:
 | RF-10 | `crearCita` | ✅ Completado |
 | RF-13 | `cambiarEstadoCita` | ✅ Completado |
 | Turnos | `asignarTurnos` | ✅ Completado |
+| Bloqueo | `bloquearHorario` | ✅ Completado |
+| Agenda | `obtenerDisponibilidad` | ✅ Completado |
 
-**Pruebas unitarias:** 13 passed, 6 suites
+**Pruebas unitarias:** 18 passed, 6 suites
 
 ### Archivos de prueba (patrón AAA)
 
