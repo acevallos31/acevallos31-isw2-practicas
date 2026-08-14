@@ -123,8 +123,9 @@ Cada prueba unitaria sigue el patrón AAA:
 | Agenda | `obtenerDisponibilidad` | ✅ Completado |
 | RF-14 | `editarCita` / `cancelarCita` | ✅ Completado |
 | RF-12 | `listarCitas` | ✅ Completado |
+| RF-09 | `editarMedico` / `eliminarMedico` | ✅ Completado |
 
-**Pruebas unitarias:** 28 passed, 8 suites
+**Pruebas unitarias:** 32 passed, 8 suites
 
 ### Archivos de prueba (patrón AAA)
 
