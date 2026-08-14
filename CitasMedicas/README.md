@@ -122,8 +122,9 @@ Cada prueba unitaria sigue el patrón AAA:
 | Bloqueo | `bloquearHorario` | ✅ Completado |
 | Agenda | `obtenerDisponibilidad` | ✅ Completado |
 | RF-14 | `editarCita` / `cancelarCita` | ✅ Completado |
+| RF-12 | `listarCitas` | ✅ Completado |
 
-**Pruebas unitarias:** 22 passed, 7 suites
+**Pruebas unitarias:** 28 passed, 8 suites
 
 ### Archivos de prueba (patrón AAA)
 
