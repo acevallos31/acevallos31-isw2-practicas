@@ -19,11 +19,29 @@ export function validarCamposObligatorios(datos, camposObligatorios) {
 }
 
 /**
+ * Normaliza un DNI eliminando espacios y convirtiendo a mayúsculas.
+ * @param {string} dni - DNI a normalizar.
+ * @returns {string} DNI normalizado.
+ */
+function normalizarDni(dni) {
+  return String(dni).trim().toUpperCase();
+}
+
+/**
  * Valida que un DNI no esté duplicado en la lista de pacientes.
  * @param {string} dni - DNI a validar.
  * @param {Array<Object>} pacientes - Lista de pacientes existentes.
  * @returns {boolean} true si el DNI es único, false si está duplicado.
+ * @throws {Error} Si el DNI o la lista de pacientes son inválidos.
  */
 export function validarDniUnico(dni, pacientes) {
-  return !pacientes.some((paciente) => paciente.dni === dni);
+  if (!dni || String(dni).trim() === '') {
+    throw new Error('El DNI es obligatorio.');
+  }
+  if (!Array.isArray(pacientes)) {
+    throw new Error('La lista de pacientes es inválida.');
+  }
+
+  const dniNormalizado = normalizarDni(dni);
+  return !pacientes.some((paciente) => normalizarDni(paciente.dni) === dniNormalizado);
 }
