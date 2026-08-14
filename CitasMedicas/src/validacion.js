@@ -174,6 +174,22 @@ export function validarTransicionEstado(estadoActual, nuevoEstado) {
   }
 }
 
+/**
+ * Crea un registro de auditoría para una acción sobre una cita.
+ * @param {string} accion - Acción realizada (ej. CANCELAR_CITA).
+ * @param {string} citaId - Identificador de la cita.
+ * @param {string} usuario - Usuario que realizó la acción.
+ * @returns {Object} Registro de auditoría.
+ */
+export function crearAuditoria(accion, citaId, usuario) {
+  return {
+    accion,
+    usuario: usuario || 'sistema',
+    fecha: new Date().toISOString(),
+    citaId
+  };
+}
+
 /** Días válidos de atención. */
 const DIAS_VALIDOS = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
 

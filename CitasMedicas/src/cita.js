@@ -11,7 +11,8 @@ import {
   validarFormatoHora,
   validarConflictoHorario,
   validarEstadoCita,
-  validarTransicionEstado
+  validarTransicionEstado,
+  crearAuditoria
 } from './validacion.js';
 
 /** Campos obligatorios para crear una cita. */
@@ -88,13 +89,7 @@ export function editarCita(cita, nuevosDatos, citasExistentes) {
  */
 export function cancelarCita(cita, usuario) {
   const citaCancelada = { ...cita, estado: 'Cancelada' };
-
-  const auditoria = {
-    accion: 'CANCELAR_CITA',
-    usuario: usuario || 'sistema',
-    fecha: new Date().toISOString(),
-    citaId: cita.id
-  };
+  const auditoria = crearAuditoria('CANCELAR_CITA', cita.id, usuario);
 
   return { ...citaCancelada, auditoria };
 }
