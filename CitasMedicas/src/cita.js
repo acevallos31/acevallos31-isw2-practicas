@@ -1,12 +1,14 @@
 // ============================================================
 // Módulo: Cita
-// Fase TDD: GREEN — Implementación mínima para pasar la prueba
+// Fase TDD: REFACTOR — Mejora de código sin cambiar comportamiento
 // Principio SOLID: SRP (Responsabilidad Única)
 // ============================================================
 
 import {
   validarCamposObligatorios,
   validarFechaNoPasada,
+  validarFormatoFecha,
+  validarFormatoHora,
   validarConflictoHorario
 } from './validacion.js';
 
@@ -25,6 +27,8 @@ const ESTADO_INICIAL = 'Pendiente';
  */
 export function crearCita(datos, citasExistentes) {
   validarCamposObligatorios(datos, CAMPOS_OBLIGATORIOS);
+  validarFormatoFecha(datos.fecha);
+  validarFormatoHora(datos.hora);
   validarFechaNoPasada(datos.fecha);
   validarConflictoHorario(datos, citasExistentes);
 

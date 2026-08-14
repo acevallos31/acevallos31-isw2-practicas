@@ -86,6 +86,41 @@ export function validarFechaNoPasada(fecha) {
 }
 
 /**
+ * Valida que una fecha tenga formato YYYY-MM-DD.
+ * @param {string} fecha - Fecha a validar.
+ * @throws {Error} Si el formato es inválido.
+ */
+export function validarFormatoFecha(fecha) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(fecha)) {
+    throw new Error('La fecha debe tener formato YYYY-MM-DD.');
+  }
+}
+
+/**
+ * Valida que una hora tenga formato HH:MM.
+ * @param {string} hora - Hora a validar.
+ * @throws {Error} Si el formato es inválido.
+ */
+export function validarFormatoHora(hora) {
+  if (!esHoraValida(hora)) {
+    throw new Error('La hora debe tener formato HH:MM.');
+  }
+}
+
+/**
+ * Valida que una hora esté dentro del horario de atención de un médico.
+ * @param {string} hora - Hora de la cita (HH:MM).
+ * @param {string} horarioInicio - Hora de inicio del médico (HH:MM).
+ * @param {string} horarioFin - Hora de fin del médico (HH:MM).
+ * @throws {Error} Si la hora está fuera del horario de atención.
+ */
+export function validarHoraEnHorario(hora, horarioInicio, horarioFin) {
+  if (hora < horarioInicio || hora >= horarioFin) {
+    throw new Error('La hora de la cita debe estar dentro del horario de atención del médico.');
+  }
+}
+
+/**
  * Valida que no exista conflicto de horario para un médico o paciente.
  * @param {Object} datos - Datos de la cita (idPaciente, idMedico, fecha, hora).
  * @param {Array<Object>} citasExistentes - Lista de citas existentes.
