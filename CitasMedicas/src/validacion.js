@@ -203,6 +203,17 @@ export function normalizarDiasAtencion(dias) {
 }
 
 /**
+ * Valida que un objeto médico sea válido.
+ * @param {Object} medico - Médico a validar.
+ * @throws {Error} Si el médico no es válido.
+ */
+export function validarMedico(medico) {
+  if (!medico || !medico.id) {
+    throw new Error('El médico no es válido.');
+  }
+}
+
+/**
  * Valida que un bloqueo de horario esté dentro del horario de atención del médico.
  * @param {Object} bloqueo - Bloqueo a validar (horaInicio, horaFin).
  * @param {string} horarioInicio - Hora de inicio del médico (HH:MM).
