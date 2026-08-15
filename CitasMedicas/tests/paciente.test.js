@@ -5,7 +5,7 @@
 // Patrón AAA: Arrange - Act - Assert
 // ============================================================
 
-import { crearPaciente, buscarPacientes, editarPaciente, eliminarPaciente } from '../src/paciente.js';
+import { crearPaciente, buscarPacientes, editarPaciente, eliminarPaciente, listarPacientes } from '../src/paciente.js';
 
 describe('crearPaciente', () => {
   test('debe crear un paciente válido con todos sus datos', () => {
@@ -146,5 +146,29 @@ describe('eliminarPaciente', () => {
 
     // ASSERT: Verificamos que lanza un error
     expect(eliminar).toThrow('El paciente no existe.');
+  });
+});
+
+// ============================================================
+// PRUEBA UNITARIA — TDD (RED)
+// Requerimiento: RF-02 — Listar pacientes
+// Función: listarPacientes
+// Patrón AAA: Arrange - Act - Assert
+// ============================================================
+
+describe('listarPacientes', () => {
+  test('debe listar todos los pacientes sin modificar la lista original', () => {
+    // ARRANGE: Preparamos una lista de pacientes registrados
+    const pacientes = [
+      { id: 'pac-1', nombre: 'Juan', dni: '12345678' },
+      { id: 'pac-2', nombre: 'María', dni: '87654321' }
+    ];
+
+    // ACT: Ejecutamos la función a probar
+    const resultado = listarPacientes(pacientes);
+
+    // ASSERT: Verificamos que devuelve todos los pacientes en una nueva lista
+    expect(resultado).toEqual(pacientes);
+    expect(resultado).not.toBe(pacientes);
   });
 });
