@@ -23,6 +23,19 @@ const CAMPOS_OBLIGATORIOS = ['idPaciente', 'idMedico', 'fecha', 'hora', 'motivo'
 const ESTADO_INICIAL = 'Pendiente';
 
 /**
+ * Valida la hora de la cita cuando se proporciona el médico seleccionado.
+ * @param {Object} datos - Datos de la cita.
+ * @param {Object} medico - Médico seleccionado.
+ */
+function validarHorarioDelMedico(datos, medico) {
+  if (!medico) {
+    return;
+  }
+
+  validarHoraEnHorario(datos.hora, medico.horarioInicio, medico.horarioFin);
+}
+
+/**
  * Crea una nueva cita con un id único.
  * @param {Object} datos - Datos de la cita.
  * @param {Array<Object>} citasExistentes - Lista de citas existentes.
@@ -35,11 +48,7 @@ export function crearCita(datos, citasExistentes, medico) {
   validarFormatoFecha(datos.fecha);
   validarFormatoHora(datos.hora);
   validarFechaNoPasada(datos.fecha);
-
-  if (medico) {
-    validarHoraEnHorario(datos.hora, medico.horarioInicio, medico.horarioFin);
-  }
-
+  validarHorarioDelMedico(datos, medico);
   validarConflictoHorario(datos, citasExistentes);
 
   return {
