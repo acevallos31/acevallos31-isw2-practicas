@@ -4,7 +4,7 @@
 // Principio SOLID: SRP (Responsabilidad Única)
 // ============================================================
 
-import { validarCamposObligatorios } from './validacion.js';
+import { validarCamposObligatorios, validarExistencia } from './validacion.js';
 
 /** Campos obligatorios para crear un paciente. */
 const CAMPOS_OBLIGATORIOS = ['nombre', 'apellidos', 'dni', 'fechaNacimiento', 'telefono'];
@@ -64,4 +64,17 @@ export function buscarPacientes(pacientes, criterio) {
  */
 export function editarPaciente(paciente, nuevosDatos) {
   return { ...paciente, ...nuevosDatos };
+}
+
+/**
+ * Elimina un paciente de la lista.
+ * @param {Array<Object>} pacientes - Lista de pacientes.
+ * @param {string} id - Identificador del paciente a eliminar.
+ * @returns {Array<Object>} Lista de pacientes sin el eliminado.
+ * @throws {Error} Si el paciente no existe.
+ */
+export function eliminarPaciente(pacientes, id) {
+  validarExistencia(pacientes, id, 'paciente');
+
+  return pacientes.filter((paciente) => paciente.id !== id);
 }
