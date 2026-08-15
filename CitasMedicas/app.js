@@ -33,6 +33,7 @@ let estadoApp = {
 function inicializarApp() {
   cargarDatos();
   configurarEventos();
+  configurarAccionesDeListas();
   actualizarEstadisticas();
   renderizarPacientes();
   renderizarMedicos();
@@ -95,6 +96,30 @@ function cambiarPestana(seccion) {
 window.irAPestana = function(seccion) {
   cambiarPestana(seccion);
 };
+
+/**
+ * Centraliza las acciones de los botones generados dinámicamente.
+ */
+function configurarAccionesDeListas() {
+  const acciones = {
+    'editar-paciente': (id) => window.editarPaciente(id),
+    'eliminar-paciente': (id) => window.eliminarPacienteUI(id),
+    'editar-medico': (id) => window.editarMedico(id),
+    'eliminar-medico': (id) => window.eliminarMedicoUI(id),
+    'confirmar-cita': (id) => window.confirmarCita(id),
+    'cancelar-cita': (id) => window.cancelarCitaUI(id),
+    'eliminar-cita': (id) => window.eliminarCitaUI(id),
+  };
+
+  document.addEventListener('click', (evento) => {
+    const boton = evento.target.closest('[data-accion]');
+    const accion = boton && acciones[boton.dataset.accion];
+
+    if (accion) {
+      accion(boton.dataset.id);
+    }
+  });
+}
 
 // ============================================================
 // GESTIÓN DE MENSAJES
@@ -219,10 +244,10 @@ function renderizarPacientes() {
         <div class="elemento-detalle">Correo: ${escaparHTML(paciente.correo)}</div>
       </div>
       <div class="elemento-acciones">
-        <button class="boton boton-primario boton-pequeno" onclick="editarPaciente('${paciente.id}')">
+        <button class="boton boton-primario boton-pequeno" data-accion="editar-paciente" data-id="${escaparHTML(paciente.id)}">
           ✏️ Editar
         </button>
-        <button class="boton boton-eliminar boton-pequeno" onclick="eliminarPacienteUI('${paciente.id}')">
+        <button class="boton boton-eliminar boton-pequeno" data-accion="eliminar-paciente" data-id="${escaparHTML(paciente.id)}">
           🗑️ Eliminar
         </button>
       </div>
@@ -300,10 +325,10 @@ function configurarBuscadorPacientes() {
           <div class="elemento-detalle">Correo: ${escaparHTML(paciente.correo)}</div>
         </div>
         <div class="elemento-acciones">
-          <button class="boton boton-primario boton-pequeno" onclick="editarPaciente('${paciente.id}')">
+          <button class="boton boton-primario boton-pequeno" data-accion="editar-paciente" data-id="${escaparHTML(paciente.id)}">
             ✏️ Editar
           </button>
-          <button class="boton boton-eliminar boton-pequeno" onclick="eliminarPacienteUI('${paciente.id}')">
+          <button class="boton boton-eliminar boton-pequeno" data-accion="eliminar-paciente" data-id="${escaparHTML(paciente.id)}">
             🗑️ Eliminar
           </button>
         </div>
@@ -378,10 +403,10 @@ function renderizarMedicos() {
         <div class="elemento-detalle">Horario: ${escaparHTML(medico.horarioInicio)} - ${escaparHTML(medico.horarioFin)}</div>
       </div>
       <div class="elemento-acciones">
-        <button class="boton boton-primario boton-pequeno" onclick="editarMedico('${medico.id}')">
+        <button class="boton boton-primario boton-pequeno" data-accion="editar-medico" data-id="${escaparHTML(medico.id)}">
           ✏️ Editar
         </button>
-        <button class="boton boton-eliminar boton-pequeno" onclick="eliminarMedicoUI('${medico.id}')">
+        <button class="boton boton-eliminar boton-pequeno" data-accion="eliminar-medico" data-id="${escaparHTML(medico.id)}">
           🗑️ Eliminar
         </button>
       </div>
@@ -459,10 +484,10 @@ function configurarFiltroMedicos() {
           <div class="elemento-detalle">Horario: ${escaparHTML(medico.horarioInicio)} - ${escaparHTML(medico.horarioFin)}</div>
         </div>
         <div class="elemento-acciones">
-          <button class="boton boton-primario boton-pequeno" onclick="editarMedico('${medico.id}')">
+          <button class="boton boton-primario boton-pequeno" data-accion="editar-medico" data-id="${escaparHTML(medico.id)}">
             ✏️ Editar
           </button>
-          <button class="boton boton-eliminar boton-pequeno" onclick="eliminarMedicoUI('${medico.id}')">
+          <button class="boton boton-eliminar boton-pequeno" data-accion="eliminar-medico" data-id="${escaparHTML(medico.id)}">
             🗑️ Eliminar
           </button>
         </div>
@@ -553,16 +578,16 @@ function renderizarCitas() {
         </div>
         <div class="elemento-acciones">
           ${cita.estado === 'Pendiente' ? `
-            <button class="boton boton-confirmar-cita boton-pequeno" onclick="confirmarCita('${cita.id}')">
+            <button class="boton boton-confirmar-cita boton-pequeno" data-accion="confirmar-cita" data-id="${escaparHTML(cita.id)}">
               ✅ Confirmar
             </button>
           ` : ''}
           ${['Pendiente', 'Confirmada'].includes(cita.estado) ? `
-            <button class="boton boton-cancelar-cita boton-pequeno" onclick="cancelarCitaUI('${cita.id}')">
+            <button class="boton boton-cancelar-cita boton-pequeno" data-accion="cancelar-cita" data-id="${escaparHTML(cita.id)}">
               ❌ Cancelar
             </button>
           ` : ''}
-          <button class="boton boton-eliminar boton-pequeno" onclick="eliminarCitaUI('${cita.id}')">
+          <button class="boton boton-eliminar boton-pequeno" data-accion="eliminar-cita" data-id="${escaparHTML(cita.id)}">
             🗑️ Eliminar
           </button>
         </div>
@@ -677,16 +702,16 @@ function configurarFiltrosCitas() {
           </div>
           <div class="elemento-acciones">
             ${cita.estado === 'Pendiente' ? `
-              <button class="boton boton-confirmar-cita boton-pequeno" onclick="confirmarCita('${cita.id}')">
+              <button class="boton boton-confirmar-cita boton-pequeno" data-accion="confirmar-cita" data-id="${escaparHTML(cita.id)}">
                 ✅ Confirmar
               </button>
             ` : ''}
             ${['Pendiente', 'Confirmada'].includes(cita.estado) ? `
-              <button class="boton boton-cancelar-cita boton-pequeno" onclick="cancelarCitaUI('${cita.id}')">
+              <button class="boton boton-cancelar-cita boton-pequeno" data-accion="cancelar-cita" data-id="${escaparHTML(cita.id)}">
                 ❌ Cancelar
               </button>
             ` : ''}
-            <button class="boton boton-eliminar boton-pequeno" onclick="eliminarCitaUI('${cita.id}')">
+            <button class="boton boton-eliminar boton-pequeno" data-accion="eliminar-cita" data-id="${escaparHTML(cita.id)}">
               🗑️ Eliminar
             </button>
           </div>
