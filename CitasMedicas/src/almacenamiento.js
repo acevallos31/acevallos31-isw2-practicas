@@ -25,3 +25,33 @@ function obtenerAlmacenamiento(almacenamiento) {
 export function guardarDatos(clave, datos, almacenamiento = localStorage) {
   obtenerAlmacenamiento(almacenamiento).setItem(clave, JSON.stringify(datos));
 }
+
+/**
+ * Exporta múltiples colecciones en un objeto JSON.
+ * @param {Array<Object>} pacientes - Lista de pacientes.
+ * @param {Array<Object>} medicos - Lista de médicos.
+ * @param {Array<Object>} citas - Lista de citas.
+ * @returns {string} String JSON con todas las colecciones.
+ */
+export function exportarJSON(pacientes, medicos, citas) {
+  const datos = {
+    pacientes,
+    medicos,
+    citas,
+  };
+  return JSON.stringify(datos);
+}
+
+/**
+ * Importa colecciones desde un string JSON.
+ * @param {string} json - String JSON con las colecciones.
+ * @returns {Object} Objeto con propiedades pacientes, medicos, citas.
+ * @throws {Error} Si el JSON no es válido.
+ */
+export function importarJSON(json) {
+  try {
+    return JSON.parse(json);
+  } catch {
+    throw new Error('El JSON no es válido.');
+  }
+}
