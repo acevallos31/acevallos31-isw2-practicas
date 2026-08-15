@@ -5,7 +5,7 @@
 // Patrón AAA: Arrange - Act - Assert
 // ============================================================
 
-import { crearPaciente, buscarPacientes } from '../src/paciente.js';
+import { crearPaciente, buscarPacientes, editarPaciente } from '../src/paciente.js';
 
 describe('crearPaciente', () => {
   test('debe crear un paciente válido con todos sus datos', () => {
@@ -85,5 +85,29 @@ describe('buscarPacientes', () => {
 
     // ASSERT: Verificamos que devuelve lista vacía
     expect(resultado.length).toBe(0);
+  });
+});
+
+// ============================================================
+// PRUEBA UNITARIA — TDD (RED)
+// Requerimiento: RF-04 — Editar paciente
+// Función: editarPaciente
+// Patrón AAA: Arrange - Act - Assert
+// ============================================================
+
+describe('editarPaciente', () => {
+  test('debe editar los datos de un paciente existente', () => {
+    // ARRANGE: Preparamos un paciente existente y los nuevos datos
+    const paciente = { id: 'pac-1', nombre: 'Juan', apellidos: 'Pérez', dni: '12345678', telefono: '987654321', correo: 'juan@mail.com' };
+    const nuevosDatos = { telefono: '999888777', correo: 'juan.nuevo@mail.com' };
+
+    // ACT: Ejecutamos la función a probar
+    const resultado = editarPaciente(paciente, nuevosDatos);
+
+    // ASSERT: Verificamos que el paciente se editó correctamente
+    expect(resultado.telefono).toBe('999888777');
+    expect(resultado.correo).toBe('juan.nuevo@mail.com');
+    expect(resultado.id).toBe('pac-1');
+    expect(resultado.nombre).toBe('Juan');
   });
 });
