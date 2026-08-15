@@ -5,7 +5,7 @@
 // Patrón AAA: Arrange - Act - Assert
 // ============================================================
 
-import { crearPaciente, buscarPacientes, editarPaciente } from '../src/paciente.js';
+import { crearPaciente, buscarPacientes, editarPaciente, eliminarPaciente } from '../src/paciente.js';
 
 describe('crearPaciente', () => {
   test('debe crear un paciente válido con todos sus datos', () => {
@@ -109,5 +109,42 @@ describe('editarPaciente', () => {
     expect(resultado.correo).toBe('juan.nuevo@mail.com');
     expect(resultado.id).toBe('pac-1');
     expect(resultado.nombre).toBe('Juan');
+  });
+});
+
+// ============================================================
+// PRUEBA UNITARIA — TDD (RED)
+// Requerimiento: RF-05 — Eliminar paciente
+// Función: eliminarPaciente
+// Patrón AAA: Arrange - Act - Assert
+// ============================================================
+
+describe('eliminarPaciente', () => {
+  test('debe eliminar un paciente de la lista', () => {
+    // ARRANGE: Preparamos una lista de pacientes
+    const pacientes = [
+      { id: 'pac-1', nombre: 'Juan', dni: '12345678' },
+      { id: 'pac-2', nombre: 'María', dni: '87654321' }
+    ];
+
+    // ACT: Ejecutamos la función a probar
+    const resultado = eliminarPaciente(pacientes, 'pac-1');
+
+    // ASSERT: Verificamos que el paciente fue eliminado
+    expect(resultado.length).toBe(1);
+    expect(resultado[0].id).toBe('pac-2');
+  });
+
+  test('debe lanzar error si el paciente no existe', () => {
+    // ARRANGE: Preparamos una lista de pacientes
+    const pacientes = [
+      { id: 'pac-1', nombre: 'Juan', dni: '12345678' }
+    ];
+
+    // ACT: Ejecutamos la función a probar
+    const eliminar = () => eliminarPaciente(pacientes, 'pac-999');
+
+    // ASSERT: Verificamos que lanza un error
+    expect(eliminar).toThrow('El paciente no existe.');
   });
 });
