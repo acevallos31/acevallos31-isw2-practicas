@@ -9,6 +9,7 @@ import {
   validarFechaNoPasada,
   validarFormatoFecha,
   validarFormatoHora,
+  validarHoraEnHorario,
   validarConflictoHorario,
   validarEstadoCita,
   validarTransicionEstado,
@@ -25,14 +26,20 @@ const ESTADO_INICIAL = 'Pendiente';
  * Crea una nueva cita con un id único.
  * @param {Object} datos - Datos de la cita.
  * @param {Array<Object>} citasExistentes - Lista de citas existentes.
+ * @param {Object} medico - Médico seleccionado para validar su horario de atención.
  * @returns {Object} Cita creada.
  * @throws {Error} Si faltan campos, la fecha es pasada o hay conflicto de horario.
  */
-export function crearCita(datos, citasExistentes) {
+export function crearCita(datos, citasExistentes, medico) {
   validarCamposObligatorios(datos, CAMPOS_OBLIGATORIOS);
   validarFormatoFecha(datos.fecha);
   validarFormatoHora(datos.hora);
   validarFechaNoPasada(datos.fecha);
+
+  if (medico) {
+    validarHoraEnHorario(datos.hora, medico.horarioInicio, medico.horarioFin);
+  }
+
   validarConflictoHorario(datos, citasExistentes);
 
   return {
