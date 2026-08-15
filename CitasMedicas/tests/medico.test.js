@@ -5,7 +5,7 @@
 // Patrón AAA: Arrange - Act - Assert
 // ============================================================
 
-import { crearMedico, editarMedico, eliminarMedico } from '../src/medico.js';
+import { crearMedico, editarMedico, eliminarMedico, listarMedicos } from '../src/medico.js';
 
 describe('crearMedico', () => {
   test('debe crear un médico válido con todos sus datos', () => {
@@ -95,5 +95,44 @@ describe('eliminarMedico', () => {
 
     // ASSERT: Verificamos que lanza un error
     expect(eliminar).toThrow('El médico no existe.');
+  });
+});
+
+// ============================================================
+// PRUEBA UNITARIA — TDD (RED)
+// Requerimiento: RF-08 — Listar médicos y filtrar por especialidad
+// Función: listarMedicos
+// Patrón AAA: Arrange - Act - Assert
+// ============================================================
+
+describe('listarMedicos', () => {
+  test('debe listar todos los médicos sin filtros', () => {
+    // ARRANGE: Preparamos una lista de médicos
+    const medicos = [
+      { id: 'med-1', nombre: 'Dra. Ana Torres', especialidad: 'Cardiología' },
+      { id: 'med-2', nombre: 'Dr. Luis Pérez', especialidad: 'Dermatología' }
+    ];
+
+    // ACT: Ejecutamos la función a probar
+    const resultado = listarMedicos(medicos);
+
+    // ASSERT: Verificamos que devuelve todos los médicos
+    expect(resultado.length).toBe(2);
+  });
+
+  test('debe filtrar médicos por especialidad', () => {
+    // ARRANGE: Preparamos una lista de médicos
+    const medicos = [
+      { id: 'med-1', nombre: 'Dra. Ana Torres', especialidad: 'Cardiología' },
+      { id: 'med-2', nombre: 'Dr. Luis Pérez', especialidad: 'Dermatología' }
+    ];
+    const filtros = { especialidad: 'Dermatología' };
+
+    // ACT: Ejecutamos la función a probar
+    const resultado = listarMedicos(medicos, filtros);
+
+    // ASSERT: Verificamos que solo devuelve los médicos de esa especialidad
+    expect(resultado.length).toBe(1);
+    expect(resultado[0].id).toBe('med-2');
   });
 });
