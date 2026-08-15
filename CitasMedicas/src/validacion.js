@@ -127,7 +127,9 @@ export function validarHoraEnHorario(hora, horarioInicio, horarioFin) {
  * @throws {Error} Si hay conflicto de horario.
  */
 export function validarConflictoHorario(datos, citasExistentes) {
-  const conflictoMedico = citasExistentes.some(
+  const citasActivas = citasExistentes.filter((cita) => cita.estado !== 'Cancelada');
+
+  const conflictoMedico = citasActivas.some(
     (cita) =>
       cita.idMedico === datos.idMedico &&
       cita.fecha === datos.fecha &&
@@ -137,7 +139,7 @@ export function validarConflictoHorario(datos, citasExistentes) {
     throw new Error('El médico ya tiene una cita en esa fecha y hora.');
   }
 
-  const conflictoPaciente = citasExistentes.some(
+  const conflictoPaciente = citasActivas.some(
     (cita) =>
       cita.idPaciente === datos.idPaciente &&
       cita.fecha === datos.fecha &&
