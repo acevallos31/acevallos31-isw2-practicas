@@ -4,7 +4,7 @@
 // Principio SOLID: SRP (Responsabilidad Única)
 // ============================================================
 
-import { validarCamposObligatorios, validarExistencia } from './validacion.js';
+import { validarCamposObligatorios, validarDniUnico, validarExistencia } from './validacion.js';
 
 /** Campos obligatorios para crear un paciente. */
 const CAMPOS_OBLIGATORIOS = ['nombre', 'apellidos', 'dni', 'fechaNacimiento', 'telefono'];
@@ -12,11 +12,16 @@ const CAMPOS_OBLIGATORIOS = ['nombre', 'apellidos', 'dni', 'fechaNacimiento', 't
 /**
  * Crea un nuevo paciente con un id único.
  * @param {Object} datos - Datos del paciente.
+ * @param {Array<Object>} pacientesExistentes - Lista de pacientes registrados.
  * @returns {Object} Paciente creado.
- * @throws {Error} Si faltan campos obligatorios.
+ * @throws {Error} Si faltan campos obligatorios o el DNI ya existe.
  */
-export function crearPaciente(datos) {
+export function crearPaciente(datos, pacientesExistentes = []) {
   validarCamposObligatorios(datos, CAMPOS_OBLIGATORIOS);
+
+  if (!validarDniUnico(datos.dni, pacientesExistentes)) {
+    throw new Error('El DNI ya está registrado.');
+  }
 
   return {
     id: crypto.randomUUID(),

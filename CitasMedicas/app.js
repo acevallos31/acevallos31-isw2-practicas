@@ -210,7 +210,7 @@ function configurarFormularioPaciente() {
         estadoApp.editandoPaciente = null;
       } else {
         // Crear paciente
-        const nuevoPaciente = crearPaciente(datos);
+        const nuevoPaciente = crearPaciente(datos, estadoApp.pacientes);
         estadoApp.pacientes.push(nuevoPaciente);
         mostrarMensaje('✅ Paciente registrado correctamente', 'exito');
       }
