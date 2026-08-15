@@ -55,3 +55,13 @@ export function buscarPacientes(pacientes, criterio) {
       normalizarTexto(paciente.dni).includes(texto)
   );
 }
+
+/**
+ * Edita los datos de un paciente existente.
+ * @param {Object} paciente - Paciente a editar.
+ * @param {Object} nuevosDatos - Nuevos datos del paciente.
+ * @returns {Object} Paciente editado.
+ */
+export function editarPaciente(paciente, nuevosDatos) {
+  return { ...paciente, ...nuevosDatos };
+}
