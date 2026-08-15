@@ -141,3 +141,15 @@ export function eliminarMedico(medicos, id) {
 
   return medicos.filter((medico) => medico.id !== id);
 }
+
+/**
+ * Lista médicos aplicando filtros opcionales.
+ * @param {Array<Object>} medicos - Lista de médicos.
+ * @param {Object} filtros - Filtros a aplicar (especialidad).
+ * @returns {Array<Object>} Médicos que cumplen los filtros.
+ */
+export function listarMedicos(medicos, filtros = {}) {
+  return medicos.filter(
+    (medico) => !filtros.especialidad || medico.especialidad === filtros.especialidad
+  );
+}
