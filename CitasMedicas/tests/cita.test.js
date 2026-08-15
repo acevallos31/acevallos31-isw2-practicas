@@ -90,4 +90,32 @@ describe('crearCita', () => {
     // ASSERT: Verificamos que lanza un error por conflicto de horario del paciente
     expect(crear).toThrow('El paciente ya tiene una cita en esa fecha y hora.');
   });
+
+  test('debe permitir una cita en un horario ocupado solo por una cita cancelada', () => {
+    // ARRANGE: Preparamos una cita cancelada en el mismo horario
+    const datos = {
+      idPaciente: 'pac-2',
+      idMedico: 'med-1',
+      fecha: '2026-08-20',
+      hora: '10:00',
+      motivo: 'Consulta'
+    };
+    const citasExistentes = [
+      {
+        id: 'cita-1',
+        idPaciente: 'pac-1',
+        idMedico: 'med-1',
+        fecha: '2026-08-20',
+        hora: '10:00',
+        estado: 'Cancelada'
+      }
+    ];
+
+    // ACT: Ejecutamos la función a probar
+    const cita = crearCita(datos, citasExistentes);
+
+    // ASSERT: Verificamos que el horario queda disponible
+    expect(cita).toMatchObject(datos);
+    expect(cita.estado).toBe('Pendiente');
+  });
 });
