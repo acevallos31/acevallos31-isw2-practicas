@@ -8,6 +8,7 @@ import { crearPaciente, buscarPacientes, editarPaciente, eliminarPaciente, lista
 import { crearMedico, editarMedico, eliminarMedico, listarMedicos, asignarTurnos, bloquearHorario, obtenerDisponibilidad } from './src/medico.js';
 import { crearCita, editarCita, cancelarCita, listarCitas, cambiarEstadoCita } from './src/cita.js';
 import { guardarDatos, obtenerDatos, eliminarDatos, exportarJSON, importarJSON } from './src/almacenamiento.js';
+import { escaparHTML } from './src/sanitizacion.js';
 
 // ============================================================
 // ESTADO GLOBAL DE LA APLICACIÓN
@@ -213,9 +214,9 @@ function renderizarPacientes() {
   lista.innerHTML = estadoApp.pacientes.map(paciente => `
     <div class="elemento-lista">
       <div class="elemento-info">
-        <div class="elemento-titulo">${paciente.nombre} ${paciente.apellidos}</div>
-        <div class="elemento-detalle">DNI: ${paciente.dni} | Teléfono: ${paciente.telefono}</div>
-        <div class="elemento-detalle">Correo: ${paciente.correo}</div>
+        <div class="elemento-titulo">${escaparHTML(paciente.nombre)} ${escaparHTML(paciente.apellidos)}</div>
+        <div class="elemento-detalle">DNI: ${escaparHTML(paciente.dni)} | Teléfono: ${escaparHTML(paciente.telefono)}</div>
+        <div class="elemento-detalle">Correo: ${escaparHTML(paciente.correo)}</div>
       </div>
       <div class="elemento-acciones">
         <button class="boton boton-primario boton-pequeno" onclick="editarPaciente('${paciente.id}')">
@@ -294,9 +295,9 @@ function configurarBuscadorPacientes() {
     lista.innerHTML = resultados.map(paciente => `
       <div class="elemento-lista">
         <div class="elemento-info">
-          <div class="elemento-titulo">${paciente.nombre} ${paciente.apellidos}</div>
-          <div class="elemento-detalle">DNI: ${paciente.dni} | Teléfono: ${paciente.telefono}</div>
-          <div class="elemento-detalle">Correo: ${paciente.correo}</div>
+          <div class="elemento-titulo">${escaparHTML(paciente.nombre)} ${escaparHTML(paciente.apellidos)}</div>
+          <div class="elemento-detalle">DNI: ${escaparHTML(paciente.dni)} | Teléfono: ${escaparHTML(paciente.telefono)}</div>
+          <div class="elemento-detalle">Correo: ${escaparHTML(paciente.correo)}</div>
         </div>
         <div class="elemento-acciones">
           <button class="boton boton-primario boton-pequeno" onclick="editarPaciente('${paciente.id}')">
@@ -372,9 +373,9 @@ function renderizarMedicos() {
   lista.innerHTML = estadoApp.medicos.map(medico => `
     <div class="elemento-lista">
       <div class="elemento-info">
-        <div class="elemento-titulo">Dr/a. ${medico.nombre}</div>
-        <div class="elemento-detalle">Especialidad: ${medico.especialidad} | Colegiatura: ${medico.colegiatura}</div>
-        <div class="elemento-detalle">Horario: ${medico.horarioInicio} - ${medico.horarioFin}</div>
+        <div class="elemento-titulo">Dr/a. ${escaparHTML(medico.nombre)}</div>
+        <div class="elemento-detalle">Especialidad: ${escaparHTML(medico.especialidad)} | Colegiatura: ${escaparHTML(medico.colegiatura)}</div>
+        <div class="elemento-detalle">Horario: ${escaparHTML(medico.horarioInicio)} - ${escaparHTML(medico.horarioFin)}</div>
       </div>
       <div class="elemento-acciones">
         <button class="boton boton-primario boton-pequeno" onclick="editarMedico('${medico.id}')">
@@ -453,9 +454,9 @@ function configurarFiltroMedicos() {
     lista.innerHTML = resultados.map(medico => `
       <div class="elemento-lista">
         <div class="elemento-info">
-          <div class="elemento-titulo">Dr/a. ${medico.nombre}</div>
-          <div class="elemento-detalle">Especialidad: ${medico.especialidad} | Colegiatura: ${medico.colegiatura}</div>
-          <div class="elemento-detalle">Horario: ${medico.horarioInicio} - ${medico.horarioFin}</div>
+          <div class="elemento-titulo">Dr/a. ${escaparHTML(medico.nombre)}</div>
+          <div class="elemento-detalle">Especialidad: ${escaparHTML(medico.especialidad)} | Colegiatura: ${escaparHTML(medico.colegiatura)}</div>
+          <div class="elemento-detalle">Horario: ${escaparHTML(medico.horarioInicio)} - ${escaparHTML(medico.horarioFin)}</div>
         </div>
         <div class="elemento-acciones">
           <button class="boton boton-primario boton-pequeno" onclick="editarMedico('${medico.id}')">
@@ -476,7 +477,7 @@ function configurarFiltroMedicos() {
 function actualizarSelectsMedicos() {
   const select = document.getElementById('cita-medico');
   select.innerHTML = '<option value="">-- Seleccionar Médico --</option>' +
-    estadoApp.medicos.map(m => `<option value="${m.id}">${m.nombre} (${m.especialidad})</option>`).join('');
+    estadoApp.medicos.map(m => `<option value="${escaparHTML(m.id)}">${escaparHTML(m.nombre)} (${escaparHTML(m.especialidad)})</option>`).join('');
 }
 
 // ============================================================
@@ -541,12 +542,12 @@ function renderizarCitas() {
     return `
       <div class="elemento-lista">
         <div class="elemento-info">
-          <div class="elemento-titulo">${paciente?.nombre || 'Paciente'} → ${medico?.nombre || 'Médico'}</div>
-          <div class="elemento-detalle">Fecha: ${cita.fecha} | Hora: ${cita.hora}</div>
-          <div class="elemento-detalle">Motivo: ${cita.motivo}</div>
+          <div class="elemento-titulo">${escaparHTML(paciente?.nombre || 'Paciente')} → ${escaparHTML(medico?.nombre || 'Médico')}</div>
+          <div class="elemento-detalle">Fecha: ${escaparHTML(cita.fecha)} | Hora: ${escaparHTML(cita.hora)}</div>
+          <div class="elemento-detalle">Motivo: ${escaparHTML(cita.motivo)}</div>
           <div>
             <span class="estado-badge estado-${cita.estado.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')}">
-              ${cita.estado}
+              ${escaparHTML(cita.estado)}
             </span>
           </div>
         </div>
@@ -665,12 +666,12 @@ function configurarFiltrosCitas() {
       return `
         <div class="elemento-lista">
           <div class="elemento-info">
-            <div class="elemento-titulo">${paciente?.nombre || 'Paciente'} → ${medico?.nombre || 'Médico'}</div>
-            <div class="elemento-detalle">Fecha: ${cita.fecha} | Hora: ${cita.hora}</div>
-            <div class="elemento-detalle">Motivo: ${cita.motivo}</div>
+            <div class="elemento-titulo">${escaparHTML(paciente?.nombre || 'Paciente')} → ${escaparHTML(medico?.nombre || 'Médico')}</div>
+            <div class="elemento-detalle">Fecha: ${escaparHTML(cita.fecha)} | Hora: ${escaparHTML(cita.hora)}</div>
+            <div class="elemento-detalle">Motivo: ${escaparHTML(cita.motivo)}</div>
             <div>
               <span class="estado-badge estado-${cita.estado.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')}">
-                ${cita.estado}
+                ${escaparHTML(cita.estado)}
               </span>
             </div>
           </div>
@@ -704,7 +705,7 @@ function configurarFiltrosCitas() {
 function actualizarSelectsPacientes() {
   const select = document.getElementById('cita-paciente');
   select.innerHTML = '<option value="">-- Seleccionar Paciente --</option>' +
-    estadoApp.pacientes.map(p => `<option value="${p.id}">${p.nombre} ${p.apellidos}</option>`).join('');
+    estadoApp.pacientes.map(p => `<option value="${escaparHTML(p.id)}">${escaparHTML(p.nombre)} ${escaparHTML(p.apellidos)}</option>`).join('');
 }
 
 // ============================================================
