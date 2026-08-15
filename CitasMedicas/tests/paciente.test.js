@@ -34,6 +34,24 @@ describe('crearPaciente', () => {
     expect(paciente.correo).toBe('juan.perez@mail.com');
     expect(paciente.direccion).toBe('Av. Los Olivos 123');
   });
+
+  test('debe rechazar un DNI ya registrado', () => {
+    // ARRANGE: Preparamos datos con un DNI que ya existe
+    const datos = {
+      nombre: 'María',
+      apellidos: 'Gómez',
+      dni: '12345678',
+      fechaNacimiento: '1992-06-20',
+      telefono: '987654321'
+    };
+    const pacientesExistentes = [{ id: 'pac-1', dni: '12345678' }];
+
+    // ACT: Ejecutamos la función a probar
+    const crear = () => crearPaciente(datos, pacientesExistentes);
+
+    // ASSERT: Verificamos que impide registrar un DNI duplicado
+    expect(crear).toThrow('El DNI ya está registrado.');
+  });
 });
 
 // ============================================================
