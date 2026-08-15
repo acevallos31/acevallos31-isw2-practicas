@@ -55,3 +55,23 @@ export function importarJSON(json) {
     throw new Error('El JSON no es válido.');
   }
 }
+
+/**
+ * Obtiene datos del almacenamiento local.
+ * @param {string} clave - Clave para recuperar los datos.
+ * @param {Storage} almacenamiento - Almacenamiento a utilizar.
+ * @returns {*} Datos deserializados, o null si no existen.
+ */
+export function obtenerDatos(clave, almacenamiento = localStorage) {
+  const datos = obtenerAlmacenamiento(almacenamiento).getItem(clave);
+  return datos ? JSON.parse(datos) : null;
+}
+
+/**
+ * Elimina datos del almacenamiento local.
+ * @param {string} clave - Clave de los datos a eliminar.
+ * @param {Storage} almacenamiento - Almacenamiento a utilizar.
+ */
+export function eliminarDatos(clave, almacenamiento = localStorage) {
+  obtenerAlmacenamiento(almacenamiento).removeItem(clave);
+}
