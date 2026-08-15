@@ -31,6 +31,15 @@ export function crearPaciente(datos) {
 }
 
 /**
+ * Lista todos los pacientes sin modificar la lista original.
+ * @param {Array<Object>} pacientes - Lista de pacientes.
+ * @returns {Array<Object>} Copia de la lista de pacientes.
+ */
+export function listarPacientes(pacientes) {
+  return [...pacientes];
+}
+
+/**
  * Normaliza un texto para búsquedas (minúsculas y sin espacios).
  * @param {string} texto - Texto a normalizar.
  * @returns {string} Texto normalizado.
