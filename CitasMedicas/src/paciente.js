@@ -10,6 +10,18 @@ import { validarCamposObligatorios, validarDniUnico, validarExistencia } from '.
 const CAMPOS_OBLIGATORIOS = ['nombre', 'apellidos', 'dni', 'fechaNacimiento', 'telefono'];
 
 /**
+ * Verifica que el DNI no esté registrado en otra ficha de paciente.
+ * @param {string} dni - DNI a comprobar.
+ * @param {Array<Object>} pacientes - Lista de pacientes registrados.
+ * @throws {Error} Si el DNI ya existe.
+ */
+function validarDniDisponible(dni, pacientes) {
+  if (!validarDniUnico(dni, pacientes)) {
+    throw new Error('El DNI ya está registrado.');
+  }
+}
+
+/**
  * Crea un nuevo paciente con un id único.
  * @param {Object} datos - Datos del paciente.
  * @param {Array<Object>} pacientesExistentes - Lista de pacientes registrados.
@@ -18,10 +30,7 @@ const CAMPOS_OBLIGATORIOS = ['nombre', 'apellidos', 'dni', 'fechaNacimiento', 't
  */
 export function crearPaciente(datos, pacientesExistentes = []) {
   validarCamposObligatorios(datos, CAMPOS_OBLIGATORIOS);
-
-  if (!validarDniUnico(datos.dni, pacientesExistentes)) {
-    throw new Error('El DNI ya está registrado.');
-  }
+  validarDniDisponible(datos.dni, pacientesExistentes);
 
   return {
     id: crypto.randomUUID(),
