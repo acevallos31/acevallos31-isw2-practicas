@@ -31,18 +31,27 @@ export function crearPaciente(datos) {
 }
 
 /**
+ * Normaliza un texto para búsquedas (minúsculas y sin espacios).
+ * @param {string} texto - Texto a normalizar.
+ * @returns {string} Texto normalizado.
+ */
+function normalizarTexto(texto) {
+  return String(texto).toLowerCase().trim();
+}
+
+/**
  * Busca pacientes por nombre o DNI.
  * @param {Array<Object>} pacientes - Lista de pacientes.
  * @param {string} criterio - Texto a buscar (nombre o DNI).
  * @returns {Array<Object>} Pacientes que coinciden con el criterio.
  */
 export function buscarPacientes(pacientes, criterio) {
-  const texto = String(criterio).toLowerCase().trim();
+  const texto = normalizarTexto(criterio);
 
   return pacientes.filter(
     (paciente) =>
-      paciente.nombre.toLowerCase().includes(texto) ||
-      paciente.apellidos.toLowerCase().includes(texto) ||
-      paciente.dni.toLowerCase().includes(texto)
+      normalizarTexto(paciente.nombre).includes(texto) ||
+      normalizarTexto(paciente.apellidos).includes(texto) ||
+      normalizarTexto(paciente.dni).includes(texto)
   );
 }
