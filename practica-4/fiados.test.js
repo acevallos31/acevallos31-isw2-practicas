@@ -32,3 +32,7 @@ test("retorna 0 cuando el monto es negativo", () => {
 test("retorna 0 cuando los dias no son numericos", () => {
     assertEqual(calcularMora(1000, "abc"), 0);
 });
+
+test("retorna 0 cuando el monto es 0", () => {
+    assertEqual(calcularMora(0, 5), 0);
+});
