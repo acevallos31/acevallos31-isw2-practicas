@@ -1,11 +1,11 @@
+function esNumeroValido(valor) {
+    return typeof valor === "number" && !Number.isNaN(valor);
+}
+
 function calcularMora(monto, diasVencidos) {
     const porcentajeMora = 0.05;
 
-    if (
-        typeof monto !== "number" ||
-        typeof diasVencidos !== "number" ||
-        Number.isNaN(diasVencidos)
-    ) {
+    if (!esNumeroValido(monto) || !esNumeroValido(diasVencidos)) {
         throw new Error("El monto y los dias deben ser numericos");
     }
 
