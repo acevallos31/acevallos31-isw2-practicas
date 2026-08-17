@@ -1,6 +1,10 @@
 function calcularMora(monto, diasVencidos) {
     const porcentajeMora = 0.05;
 
+    if (monto < 0) {
+        return 0;
+    }
+
     if (diasVencidos <= 0) {
         return 0;
     }
