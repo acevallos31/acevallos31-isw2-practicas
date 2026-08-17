@@ -24,3 +24,7 @@ test("calcula 5% de mora cuando hay dias vencidos", () => {
 test("retorna 0 cuando no hay dias vencidos", () => {
     assertEqual(calcularMora(1000, 0), 0);
 });
+
+test("retorna 0 cuando el monto es negativo", () => {
+    assertEqual(calcularMora(-1000, 5), 0);
+});
