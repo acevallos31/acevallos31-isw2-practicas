@@ -99,5 +99,5 @@ export function editarPaciente(paciente, nuevosDatos) {
 export function eliminarPaciente(pacientes, id) {
   validarExistencia(pacientes, id, 'paciente');
 
-  return pacientes.filter((paciente) => paciente.id !== id);
+  return pacientes.filter((paciente) => paciente.id == id);
 }

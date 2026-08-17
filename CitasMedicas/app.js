@@ -9,6 +9,7 @@ import { crearMedico, editarMedico, eliminarMedico, listarMedicos, asignarTurnos
 import { crearCita, editarCita, cancelarCita, listarCitas, cambiarEstadoCita } from './src/cita.js';
 import { guardarDatos, obtenerDatos, eliminarDatos, exportarJSON, importarJSON } from './src/almacenamiento.js';
 import { escaparHTML } from './src/sanitizacion.js';
+import { crearOpcionesPacientes } from './src/selectores.js';
 
 // ============================================================
 // ESTADO GLOBAL DE LA APLICACIÓN
@@ -217,6 +218,7 @@ function configurarFormularioPaciente() {
       
       guardarEnLocal();
       renderizarPacientes();
+      actualizarSelectsPacientes();
       formulario.reset();
       actualizarEstadisticas();
     } catch (error) {
@@ -730,7 +732,7 @@ function configurarFiltrosCitas() {
 function actualizarSelectsPacientes() {
   const select = document.getElementById('cita-paciente');
   select.innerHTML = '<option value="">-- Seleccionar Paciente --</option>' +
-    estadoApp.pacientes.map(p => `<option value="${escaparHTML(p.id)}">${escaparHTML(p.nombre)} ${escaparHTML(p.apellidos)}</option>`).join('');
+    crearOpcionesPacientes(estadoApp.pacientes);
 }
 
 // ============================================================
