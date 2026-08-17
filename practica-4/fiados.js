@@ -1,11 +1,11 @@
 function calcularMora(monto, diasVencidos) {
     const porcentajeMora = 0.05;
 
-    if (diasVencidos > 0) {
-        return monto * porcentajeMora;
+    if (diasVencidos <= 0) {
+        return 0;
     }
 
-    return 0;
+    return monto * porcentajeMora;
 }
 
 module.exports = { calcularMora };
