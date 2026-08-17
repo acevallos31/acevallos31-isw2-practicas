@@ -50,3 +50,7 @@ test("retorna 0 cuando el monto es 0", () => {
 test("lanza error cuando el monto no es numerico", () => {
     assertThrows(() => calcularMora("abc", 5));
 });
+
+test("lanza error cuando los dias son NaN", () => {
+    assertThrows(() => calcularMora(1000, NaN));
+});
