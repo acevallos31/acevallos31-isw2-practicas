@@ -1,5 +1,8 @@
 
+```text
 Resultado de la ejecución de las pruebas:
+
+Salida de La Consola:
 
 PS C:\Users\Usuario\Documents\IngenieraSoftware2> node practica-4/fiados.test.js
 🟢 calcula 5% de mora cuando hay dias vencidos
@@ -10,11 +13,11 @@ PS C:\Users\Usuario\Documents\IngenieraSoftware2> node practica-4/fiados.test.js
 🟢 lanza error cuando el monto no es numerico
 🟢 lanza error cuando los dias son NaN
 PS C:\Users\Usuario\Documents\IngenieraSoftware2> 
-
+```
 
 
 # Evidencia
-
+```text
 Captura de la ejecución de las pruebas:
-
+```
 ![Ejecución de los tests](./evidencia.png)
