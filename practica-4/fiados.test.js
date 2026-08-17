@@ -46,3 +46,7 @@ test("lanza error cuando los dias no son numericos", () => {
 test("retorna 0 cuando el monto es 0", () => {
     assertEqual(calcularMora(0, 5), 0);
 });
+
+test("lanza error cuando el monto no es numerico", () => {
+    assertThrows(() => calcularMora("abc", 5));
+});
