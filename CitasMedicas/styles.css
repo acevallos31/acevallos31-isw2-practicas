@@ -1,0 +1,809 @@
+/* ============================================================
+   ESTILOS GLOBALES
+   ============================================================ */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #333;
+  min-height: 100vh;
+}
+
+/* ============================================================
+   CONTENEDOR PRINCIPAL
+   ============================================================ */
+
+.contenedor-principal {
+  max-width: 1200px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ============================================================
+   ENCABEZADO
+   ============================================================ */
+
+.encabezado {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 2rem;
+  text-align: center;
+}
+
+.encabezado-contenido {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.titulo {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.subtitulo {
+  font-size: 1rem;
+  opacity: 0.9;
+}
+
+/* ============================================================
+   NAVEGACIÓN DE PESTAÑAS
+   ============================================================ */
+
+.navegacion {
+  display: flex;
+  background: #f8f9fa;
+  border-bottom: 2px solid #e9ecef;
+  overflow-x: auto;
+  flex-wrap: wrap;
+}
+
+.pestana {
+  flex: 1;
+  min-width: 150px;
+  padding: 1rem;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #666;
+  border-bottom: 3px solid transparent;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.pestana:hover {
+  background: #e9ecef;
+  color: #333;
+}
+
+.pestana.activa {
+  color: #667eea;
+  border-bottom-color: #667eea;
+}
+
+/* ============================================================
+   CONTENIDO PRINCIPAL
+   ============================================================ */
+
+.contenido-principal {
+  flex: 1;
+  padding: 2rem;
+  overflow-y: auto;
+}
+
+.seccion {
+  display: none;
+}
+
+.seccion.activa {
+  display: block;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.contenedor-seccion {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.contenedor-seccion h2 {
+  font-size: 1.8rem;
+  color: #333;
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid #667eea;
+  padding-bottom: 0.5rem;
+}
+
+/* ============================================================
+   TARJETAS Y ESTADÍSTICAS
+   ============================================================ */
+
+.tarjeta-grande {
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  padding: 2rem;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+}
+
+.tarjeta-grande h2 {
+  color: #667eea;
+  margin-bottom: 1.5rem;
+}
+
+.estadisticas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.estadistica {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.estadistica .numero {
+  display: block;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #667eea;
+  margin-bottom: 0.5rem;
+}
+
+.estadistica .label {
+  display: block;
+  font-size: 0.85rem;
+  color: #666;
+}
+
+/* ============================================================
+   ACCIONES
+   ============================================================ */
+
+.acciones-rapidas,
+.acciones-datos {
+  background: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+}
+
+.acciones-rapidas h3,
+.acciones-datos h3 {
+  font-size: 1.2rem;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.botones-grupo {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+/* ============================================================
+   BOTONES
+   ============================================================ */
+
+.boton {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.boton-primario {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.boton-primario:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+}
+
+.boton-primario:active {
+  transform: translateY(0);
+}
+
+.boton-secundario {
+  background: #e9ecef;
+  color: #333;
+}
+
+.boton-secundario:hover {
+  background: #dee2e6;
+  transform: translateY(-2px);
+}
+
+.boton-peligro {
+  background: #ff6b6b;
+  color: white;
+}
+
+.boton-peligro:hover {
+  background: #ff5252;
+  transform: translateY(-2px);
+}
+
+/* ============================================================
+   FORMULARIOS
+   ============================================================ */
+
+.formulario-contenedor {
+  background: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+}
+
+.formulario-contenedor h3 {
+  font-size: 1.2rem;
+  color: #333;
+  margin-bottom: 1.5rem;
+}
+
+.formulario {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+}
+
+.fila-formulario {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+}
+
+.campo label {
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.campo input,
+.campo select,
+.campo textarea {
+  padding: 0.75rem;
+  border: 2px solid #e9ecef;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  transition: border-color 0.3s ease;
+}
+
+.campo input:focus,
+.campo select:focus,
+.campo textarea:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.botones-formulario {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+}
+
+/* ============================================================
+   BÚSQUEDA Y FILTROS
+   ============================================================ */
+
+.buscador,
+.filtro {
+  margin-bottom: 1rem;
+}
+
+.campo-busqueda {
+  width: 100%;
+  padding: 0.75rem;
+  border: 2px solid #e9ecef;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  transition: border-color 0.3s ease;
+}
+
+.campo-busqueda:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.filtros-citas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* ============================================================
+   LISTAS
+   ============================================================ */
+
+.lista-contenedor {
+  background: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 8px;
+}
+
+.lista-contenedor h3 {
+  font-size: 1.2rem;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.lista {
+  background: white;
+  border-radius: 8px;
+}
+
+.vacio {
+  padding: 2rem;
+  text-align: center;
+  color: #999;
+  font-style: italic;
+}
+
+.elemento-lista {
+  padding: 1rem;
+  border-bottom: 1px solid #e9ecef;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.elemento-lista:last-child {
+  border-bottom: none;
+}
+
+.elemento-info {
+  flex: 1;
+  min-width: 200px;
+}
+
+.elemento-titulo {
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 0.3rem;
+}
+
+.elemento-detalle {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.elemento-acciones {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.boton-pequeno {
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+}
+
+.boton-editar {
+  background: #4dabf7;
+  color: white;
+}
+
+.boton-editar:hover {
+  background: #339af0;
+}
+
+.boton-eliminar {
+  background: #ff6b6b;
+  color: white;
+}
+
+.boton-eliminar:hover {
+  background: #ff5252;
+}
+
+.boton-confirmar-cita {
+  background: #51cf66;
+  color: white;
+}
+
+.boton-confirmar-cita:hover {
+  background: #40c057;
+}
+
+.boton-cancelar-cita {
+  background: #ffa94d;
+  color: white;
+}
+
+.boton-cancelar-cita:hover {
+  background: #ff9800;
+}
+
+/* ============================================================
+   MENSAJES Y NOTIFICACIONES
+   ============================================================ */
+
+.contenedor-mensajes {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 1000;
+  max-width: 400px;
+}
+
+.mensaje {
+  padding: 1rem;
+  border-radius: 6px;
+  margin-bottom: 0.5rem;
+  color: white;
+  font-weight: 600;
+  animation: slideIn 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.mensaje-exito {
+  background: #51cf66;
+}
+
+.mensaje-error {
+  background: #ff6b6b;
+}
+
+.mensaje-advertencia {
+  background: #ffa94d;
+}
+
+.mensaje-info {
+  background: #4dabf7;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(400px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOut {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(400px);
+    opacity: 0;
+  }
+}
+
+.mensaje.eliminar {
+  animation: slideOut 0.3s ease forwards;
+}
+
+/* ============================================================
+   MODAL
+   ============================================================ */
+
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 2000;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal.activo {
+  display: flex;
+}
+
+.modal-contenido {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  max-width: 400px;
+  width: 90%;
+  animation: popIn 0.3s ease;
+}
+
+.modal-contenido h3 {
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.modal-contenido p {
+  color: #666;
+  margin-bottom: 1.5rem;
+}
+
+.modal-botones {
+  display: flex;
+  gap: 1rem;
+}
+
+@keyframes popIn {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* ============================================================
+   ESTADOS DE CITA (BADGES)
+   ============================================================ */
+
+.estado-badge {
+  display: inline-block;
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.estado-pendiente {
+  background: #ffe066;
+  color: #7c6e00;
+}
+
+.estado-confirmada {
+  background: #b3e5fc;
+  color: #01579b;
+}
+
+.estado-completada {
+  background: #c8e6c9;
+  color: #1b5e20;
+}
+
+.estado-cancelada {
+  background: #ffcccc;
+  color: #b71c1c;
+}
+
+/* ============================================================
+   RESPONSIVIDAD - TABLETS
+   ============================================================ */
+
+@media (max-width: 768px) {
+  .encabezado {
+    padding: 1.5rem 1rem;
+  }
+
+  .titulo {
+    font-size: 1.5rem;
+  }
+
+  .subtitulo {
+    font-size: 0.9rem;
+  }
+
+  .navegacion {
+    flex-direction: column;
+  }
+
+  .pestana {
+    min-width: 100%;
+    border-bottom: none;
+    border-left: 3px solid transparent;
+    padding: 0.75rem 1rem;
+  }
+
+  .pestana.activa {
+    border-bottom: none;
+    border-left-color: #667eea;
+  }
+
+  .contenido-principal {
+    padding: 1.5rem 1rem;
+  }
+
+  .estadisticas {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .botones-grupo {
+    grid-template-columns: 1fr;
+  }
+
+  .fila-formulario {
+    grid-template-columns: 1fr;
+  }
+
+  .elemento-lista {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .elemento-acciones {
+    width: 100%;
+  }
+
+  .elemento-acciones .boton {
+    flex: 1;
+  }
+
+  .contenedor-mensajes {
+    left: 1rem;
+    right: 1rem;
+    max-width: none;
+  }
+}
+
+/* ============================================================
+   RESPONSIVIDAD - MÓVILES
+   ============================================================ */
+
+@media (max-width: 480px) {
+  body {
+    background: white;
+  }
+
+  .contenedor-principal {
+    border-radius: 0;
+    min-height: 100vh;
+  }
+
+  .encabezado {
+    padding: 1rem 0.75rem;
+  }
+
+  .titulo {
+    font-size: 1.25rem;
+  }
+
+  .subtitulo {
+    font-size: 0.8rem;
+  }
+
+  .contenido-principal {
+    padding: 1rem 0.75rem;
+  }
+
+  .contenedor-seccion h2 {
+    font-size: 1.3rem;
+  }
+
+  .estadisticas {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+  }
+
+  .estadistica {
+    padding: 1rem;
+  }
+
+  .estadistica .numero {
+    font-size: 1.5rem;
+  }
+
+  .campo {
+    margin-bottom: 0.5rem;
+  }
+
+  .campo input,
+  .campo select,
+  .campo textarea {
+    padding: 0.6rem;
+  }
+
+  .botones-formulario {
+    flex-direction: column;
+  }
+
+  .boton {
+    width: 100%;
+  }
+
+  .elemento-lista {
+    padding: 0.75rem;
+  }
+
+  .elemento-titulo {
+    font-size: 0.95rem;
+  }
+
+  .elemento-detalle {
+    font-size: 0.8rem;
+  }
+
+  .elemento-acciones {
+    justify-content: flex-start;
+  }
+
+  .contenedor-mensajes {
+    left: 0.5rem;
+    right: 0.5rem;
+    top: 0.5rem;
+  }
+
+  .mensaje {
+    font-size: 0.85rem;
+    padding: 0.75rem;
+  }
+
+  .modal-contenido {
+    width: 95%;
+  }
+}
+
+/* ============================================================
+   IMPRESIÓN
+   ============================================================ */
+
+@media print {
+  .navegacion,
+  .formulario-contenedor,
+  .buscador,
+  .filtro,
+  .botones-grupo,
+  .elemento-acciones {
+    display: none;
+  }
+
+  .contenido-principal {
+    padding: 0;
+  }
+
+  .contenedor-principal {
+    box-shadow: none;
+    border-radius: 0;
+  }
+}

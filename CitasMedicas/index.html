@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestión de Citas Médicas</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="contenedor-principal">
+    <!-- ENCABEZADO -->
+    <header class="encabezado">
+      <div class="encabezado-contenido">
+        <h1 class="titulo">🏥 Gestor de Citas Médicas</h1>
+        <p class="subtitulo">Sistema de gestión local de citas médicas</p>
+      </div>
+    </header>
+
+    <!-- NAVEGACIÓN DE PESTAÑAS -->
+    <nav class="navegacion">
+      <button class="pestana activa" data-seccion="dashboard">
+        📊 Dashboard
+      </button>
+      <button class="pestana" data-seccion="pacientes">
+        👥 Pacientes
+      </button>
+      <button class="pestana" data-seccion="medicos">
+        👨‍⚕️ Médicos
+      </button>
+      <button class="pestana" data-seccion="citas">
+        📅 Citas
+      </button>
+    </nav>
+
+    <!-- ÁREA PRINCIPAL -->
+    <main class="contenido-principal">
+      <!-- SECCIÓN: DASHBOARD -->
+      <section id="dashboard" class="seccion activa">
+        <div class="tarjeta-grande">
+          <h2>Bienvenido al Sistema de Citas Médicas</h2>
+          <div class="estadisticas">
+            <div class="estadistica">
+              <span class="numero" id="estadistica-pacientes">0</span>
+              <span class="label">Pacientes Registrados</span>
+            </div>
+            <div class="estadistica">
+              <span class="numero" id="estadistica-medicos">0</span>
+              <span class="label">Médicos Disponibles</span>
+            </div>
+            <div class="estadistica">
+              <span class="numero" id="estadistica-citas">0</span>
+              <span class="label">Citas Agendadas</span>
+            </div>
+            <div class="estadistica">
+              <span class="numero" id="estadistica-confirmadas">0</span>
+              <span class="label">Citas Confirmadas</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="acciones-rapidas">
+          <h3>Acciones Rápidas</h3>
+          <div class="botones-grupo">
+            <button class="boton boton-primario" onclick="irAPestana('pacientes')">
+              ➕ Registrar Paciente
+            </button>
+            <button class="boton boton-primario" onclick="irAPestana('medicos')">
+              ➕ Registrar Médico
+            </button>
+            <button class="boton boton-primario" onclick="irAPestana('citas')">
+              ➕ Agendar Cita
+            </button>
+          </div>
+        </div>
+
+        <div class="acciones-datos">
+          <h3>Gestión de Datos</h3>
+          <div class="botones-grupo">
+            <button class="boton boton-secundario" id="btn-exportar">
+              📥 Exportar Datos
+            </button>
+            <button class="boton boton-secundario" id="btn-importar">
+              📤 Importar Datos
+            </button>
+            <button class="boton boton-peligro" id="btn-limpiar">
+              🗑️ Limpiar Todo
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECCIÓN: PACIENTES -->
+      <section id="pacientes" class="seccion">
+        <div class="contenedor-seccion">
+          <h2>Gestión de Pacientes</h2>
+
+          <!-- FORMULARIO NUEVO PACIENTE -->
+          <div class="formulario-contenedor">
+            <h3>Registrar Nuevo Paciente</h3>
+            <form id="formulario-paciente" class="formulario">
+              <div class="fila-formulario">
+                <div class="campo">
+                  <label for="pac-nombre">Nombre:</label>
+                  <input type="text" id="pac-nombre" required>
+                </div>
+                <div class="campo">
+                  <label for="pac-apellidos">Apellidos:</label>
+                  <input type="text" id="pac-apellidos" required>
+                </div>
+              </div>
+
+              <div class="fila-formulario">
+                <div class="campo">
+                  <label for="pac-dni">DNI:</label>
+                  <input type="text" id="pac-dni" required>
+                </div>
+                <div class="campo">
+                  <label for="pac-fecha-nacimiento">Fecha de Nacimiento:</label>
+                  <input type="date" id="pac-fecha-nacimiento" required>
+                </div>
+              </div>
+
+              <div class="fila-formulario">
+                <div class="campo">
+                  <label for="pac-telefono">Teléfono:</label>
+                  <input type="tel" id="pac-telefono">
+                </div>
+                <div class="campo">
+                  <label for="pac-correo">Correo:</label>
+                  <input type="email" id="pac-correo">
+                </div>
+              </div>
+
+              <div class="campo">
+                <label for="pac-direccion">Dirección:</label>
+                <input type="text" id="pac-direccion">
+              </div>
+
+              <div class="botones-formulario">
+                <button type="submit" class="boton boton-primario">
+                  ✅ Registrar Paciente
+                </button>
+                <button type="reset" class="boton boton-secundario">
+                  🔄 Limpiar
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- LISTA DE PACIENTES -->
+          <div class="lista-contenedor">
+            <h3>Lista de Pacientes</h3>
+            <div class="buscador">
+              <input type="text" id="buscar-paciente" placeholder="Buscar por nombre o DNI..." class="campo-busqueda">
+            </div>
+            <div id="lista-pacientes" class="lista">
+              <p class="vacio">No hay pacientes registrados</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECCIÓN: MÉDICOS -->
+      <section id="medicos" class="seccion">
+        <div class="contenedor-seccion">
+          <h2>Gestión de Médicos</h2>
+
+          <!-- FORMULARIO NUEVO MÉDICO -->
+          <div class="formulario-contenedor">
+            <h3>Registrar Nuevo Médico</h3>
+            <form id="formulario-medico" class="formulario">
+              <div class="fila-formulario">
+                <div class="campo">
+                  <label for="med-nombre">Nombre:</label>
+                  <input type="text" id="med-nombre" required>
+                </div>
+                <div class="campo">
+                  <label for="med-especialidad">Especialidad:</label>
+                  <input type="text" id="med-especialidad" required>
+                </div>
+              </div>
+
+              <div class="fila-formulario">
+                <div class="campo">
+                  <label for="med-colegiatura">Colegiatura:</label>
+                  <input type="text" id="med-colegiatura" required>
+                </div>
+                <div class="campo">
+                  <label for="med-horario-inicio">Horario Inicio:</label>
+                  <input type="time" id="med-horario-inicio" required>
+                </div>
+              </div>
+
+              <div class="campo">
+                <label for="med-horario-fin">Horario Fin:</label>
+                <input type="time" id="med-horario-fin" required>
+              </div>
+
+              <div class="botones-formulario">
+                <button type="submit" class="boton boton-primario">
+                  ✅ Registrar Médico
+                </button>
+                <button type="reset" class="boton boton-secundario">
+                  🔄 Limpiar
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- LISTA DE MÉDICOS -->
+          <div class="lista-contenedor">
+            <h3>Lista de Médicos</h3>
+            <div class="filtro">
+              <input type="text" id="filtro-especialidad" placeholder="Filtrar por especialidad..." class="campo-busqueda">
+            </div>
+            <div id="lista-medicos" class="lista">
+              <p class="vacio">No hay médicos registrados</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECCIÓN: CITAS -->
+      <section id="citas" class="seccion">
+        <div class="contenedor-seccion">
+          <h2>Gestión de Citas</h2>
+
+          <!-- FORMULARIO NUEVA CITA -->
+          <div class="formulario-contenedor">
+            <h3>Agendar Nueva Cita</h3>
+            <form id="formulario-cita" class="formulario">
+              <div class="fila-formulario">
+                <div class="campo">
+                  <label for="cita-paciente">Paciente:</label>
+                  <select id="cita-paciente" required>
+                    <option value="">-- Seleccionar Paciente --</option>
+                  </select>
+                </div>
+                <div class="campo">
+                  <label for="cita-medico">Médico:</label>
+                  <select id="cita-medico" required>
+                    <option value="">-- Seleccionar Médico --</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="fila-formulario">
+                <div class="campo">
+                  <label for="cita-fecha">Fecha:</label>
+                  <input type="date" id="cita-fecha" required>
+                </div>
+                <div class="campo">
+                  <label for="cita-hora">Hora:</label>
+                  <input type="time" id="cita-hora" required>
+                </div>
+              </div>
+
+              <div class="campo">
+                <label for="cita-motivo">Motivo de la Cita:</label>
+                <textarea id="cita-motivo" rows="3" required></textarea>
+              </div>
+
+              <div class="botones-formulario">
+                <button type="submit" class="boton boton-primario">
+                  ✅ Agendar Cita
+                </button>
+                <button type="reset" class="boton boton-secundario">
+                  🔄 Limpiar
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- LISTA DE CITAS -->
+          <div class="lista-contenedor">
+            <h3>Lista de Citas</h3>
+            <div class="filtros-citas">
+              <input type="date" id="filtro-fecha" class="campo-busqueda">
+              <select id="filtro-estado" class="campo-busqueda">
+                <option value="">-- Todos los Estados --</option>
+                <option value="Pendiente">Pendiente</option>
+                <option value="Confirmada">Confirmada</option>
+                <option value="Completada">Completada</option>
+                <option value="Cancelada">Cancelada</option>
+              </select>
+            </div>
+            <div id="lista-citas" class="lista">
+              <p class="vacio">No hay citas registradas</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ÁREA DE MENSAJES -->
+    <div id="contenedor-mensajes" class="contenedor-mensajes"></div>
+
+    <!-- MODAL DE CONFIRMACIÓN -->
+    <div id="modal-confirmacion" class="modal">
+      <div class="modal-contenido">
+        <h3 id="modal-titulo">Confirmación</h3>
+        <p id="modal-mensaje">¿Está seguro?</p>
+        <div class="modal-botones">
+          <button class="boton boton-primario" id="modal-confirmar">Sí, continuar</button>
+          <button class="boton boton-secundario" id="modal-cancelar">Cancelar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCRIPTS -->
+  <script type="module" src="app.js"></script>
+</body>
+</html>
