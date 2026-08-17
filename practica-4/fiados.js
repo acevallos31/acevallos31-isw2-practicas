@@ -1,16 +1,12 @@
 function calcularMora(monto, diasVencidos) {
     const porcentajeMora = 0.05;
 
-    if (typeof monto !== "number") {
-        throw new Error("El monto debe ser numerico");
+    if (typeof monto !== "number" || typeof diasVencidos !== "number") {
+        throw new Error("El monto y los dias deben ser numericos");
     }
 
     if (monto < 0) {
         throw new Error("El monto no puede ser negativo");
-    }
-
-    if (typeof diasVencidos !== "number") {
-        throw new Error("Los dias deben ser numericos");
     }
 
     if (diasVencidos <= 0) {
