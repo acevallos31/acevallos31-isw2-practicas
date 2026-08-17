@@ -20,3 +20,7 @@ function assertEqual(actual, esperado) {
 test("calcula 5% de mora cuando hay dias vencidos", () => {
     assertEqual(calcularMora(1000, 5), 50);
 });
+
+test("retorna 0 cuando no hay dias vencidos", () => {
+    assertEqual(calcularMora(1000, 0), 0);
+});
